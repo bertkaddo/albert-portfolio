@@ -1,0 +1,357 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   Design tokens
+   Palette is anchored on the navy Albert uses on his own
+   engineering documents (#153D63), on cool drafting-paper
+   white, and on a single amber "signal" reserved for data
+   annotation — the way an annotation is called out on a plot.
+   ========================================================= */
+:root {
+  /* Typeface stack. Sora carries the display voice, Inter the body,
+     IBM Plex Mono every number, label, and caption — the utility face
+     doing the work of an engineering drawing's annotation layer. */
+  --font-display: "Sora Variable", "Sora", system-ui, sans-serif;
+  --font-body: "Inter Variable", "Inter", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --color-bg: #f4f6f8;
+  --color-ink: #0e141b;
+  --color-muted: #4b5763;
+  --color-faint: #6b7684;
+  --color-line: #d2d9e1;
+  --color-card: rgba(255, 255, 255, 0.82);
+  --color-navy: #153d63;
+  --color-navy-2: #1f5c93;
+  --color-navy-3: #e2eaf3;
+  --color-signal: #c2571a;
+  --shadow-soft: 0 22px 50px rgba(14, 20, 27, 0.09);
+  --shadow-lift: 0 28px 66px rgba(14, 20, 27, 0.14);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #f4f6f8;
+    --color-ink: #0e141b;
+    --color-muted: #4b5763;
+    --color-card: rgba(255, 255, 255, 0.82);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--color-ink);
+  background-color: var(--color-bg);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.65;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Blueprint grid: a 32px drafting grid, faded out toward the
+   bottom so it reads as paper texture rather than decoration. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(21, 61, 99, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(21, 61, 99, 0.055) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 78%);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.9),
+    transparent 78%
+  );
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display), system-ui, sans-serif;
+  letter-spacing: -0.022em;
+  font-weight: 700;
+}
+
+.font-display {
+  font-family: var(--font-display), system-ui, sans-serif;
+}
+
+.font-mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #e8ebef;
+}
+::-webkit-scrollbar-thumb {
+  background: #b6c0cc;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #97a4b3;
+}
+::selection {
+  background: rgba(31, 92, 147, 0.22);
+}
+
+/* ---------- Surfaces ---------- */
+.panel {
+  background: var(--color-card);
+  border: 1px solid rgba(14, 20, 27, 0.09);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-soft);
+  transition:
+    transform 260ms ease,
+    box-shadow 260ms ease,
+    border-color 260ms ease;
+}
+
+.panel-hover:hover {
+  border-color: rgba(21, 61, 99, 0.26);
+  box-shadow: var(--shadow-lift);
+  transform: translateY(-4px);
+}
+
+/* ---------- Labels & eyebrows ---------- */
+.section-kicker {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-size: 0.68rem;
+  color: var(--color-navy);
+  font-weight: 600;
+}
+
+.rule-label {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+.rule-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-line);
+}
+
+/* ---------- Signature element: the datasheet stat ----------
+   Lifted from Albert's own portfolio documents, where every
+   result is reported as a monospaced figure over a small-caps
+   caption. It is the one element the site is built around.   */
+.stat {
+  border-top: 2px solid var(--color-navy);
+  padding-top: 0.85rem;
+}
+.stat-value {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: clamp(1.5rem, 2.6vw, 2.05rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--color-navy);
+  line-height: 1.1;
+}
+.stat-label {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  margin-top: 0.4rem;
+  line-height: 1.45;
+}
+
+/* ---------- Pills, chips, buttons ---------- */
+.pill {
+  border-radius: 9999px;
+  border: 1px solid rgba(14, 20, 27, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.chip {
+  border-radius: 4px;
+  border: 1px solid rgba(21, 61, 99, 0.2);
+  background: rgba(226, 234, 243, 0.6);
+  color: var(--color-navy);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.6rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  border-radius: 4px;
+  background: var(--color-navy);
+  color: #ffffff;
+  font-weight: 600;
+  transition:
+    transform 200ms ease,
+    background-color 200ms ease,
+    box-shadow 200ms ease;
+  box-shadow: 0 10px 22px rgba(21, 61, 99, 0.2);
+}
+.btn-primary:hover {
+  background: var(--color-navy-2);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(21, 61, 99, 0.28);
+}
+
+.btn-secondary {
+  border-radius: 4px;
+  border: 1px solid rgba(21, 61, 99, 0.28);
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--color-navy);
+  font-weight: 600;
+  transition:
+    transform 200ms ease,
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+.btn-secondary:hover {
+  border-color: var(--color-navy);
+  background: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* ---------- Figures ---------- */
+.figure-frame {
+  background: #ffffff;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.figure-caption {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  line-height: 1.55;
+  color: var(--color-muted);
+  padding: 0.7rem 0.9rem;
+  border-top: 1px solid var(--color-line);
+  background: rgba(226, 234, 243, 0.34);
+}
+
+/* ---------- Data tables ---------- */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.data-table thead th {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--color-navy);
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 2px solid var(--color-navy);
+  white-space: nowrap;
+}
+.data-table tbody td {
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid var(--color-line);
+  color: var(--color-muted);
+  vertical-align: top;
+}
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.data-table tbody td:first-child {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+.data-table tbody tr.is-highlight td {
+  background: rgba(226, 234, 243, 0.55);
+  color: var(--color-ink);
+}
+
+/* ---------- Equation block ---------- */
+.equation {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.86rem;
+  line-height: 2;
+  background: #ffffff;
+  border: 1px solid var(--color-line);
+  border-left: 3px solid var(--color-navy);
+  border-radius: 4px;
+  padding: 1rem 1.15rem;
+  overflow-x: auto;
+  color: var(--color-ink);
+  white-space: pre-wrap;
+}
+
+/* ---------- Callout ---------- */
+.callout {
+  border-left: 3px solid var(--color-signal);
+  background: rgba(194, 87, 26, 0.05);
+  border-radius: 0 4px 4px 0;
+  padding: 1rem 1.15rem;
+  color: var(--color-ink);
+}
+
+/* ---------- Scroll reveal ---------- */
+.reveal-item {
+  transition:
+    opacity 640ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 640ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+/* ---------- Focus visibility (a11y floor) ---------- */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-fadeInUp {
+  animation: fadeInUp 0.7s ease-out;
+}
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}

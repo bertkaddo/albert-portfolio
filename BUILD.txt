@@ -1,0 +1,38 @@
+BUILD MARKER
+============
+
+Revision: 2026-08-02-r8
+Contents: 11 project case studies, 6 featured on the home page.
+
+Use this file to confirm which copy of the project you are looking at.
+If two folders disagree, the one with the newer Revision line is current.
+
+
+VERIFY A CLEAN EXTRACT
+----------------------
+
+Run these from the project root. Every line must match.
+
+  grep -c "courses?: string\[\]" src/data/profile.ts     -> 1
+  grep -c "albertaddo1327@gmail.com" src/data/profile.ts -> 1
+  grep -c "Teaching Assistant" src/data/profile.ts       -> 1
+  grep -c "featured: true" src/data/projects.ts          -> 6
+  grep -rl "github" src/                                 -> prints nothing
+  grep -rl "Curtiss Wind Tunnel" src/                    -> prints nothing
+
+If any line is wrong, you have a mixed tree from a partial unzip.
+Delete the folder and extract again into an empty directory.
+
+
+ALWAYS EXTRACT INTO AN EMPTY DIRECTORY
+--------------------------------------
+
+  cd ~/Downloads
+  rm -rf portfolio-latest
+  unzip -q albert-addo-portfolio.zip -d portfolio-latest
+  cd portfolio-latest/albert-portfolio
+
+Never unzip on top of an existing folder. Without -o, unzip asks about
+every file that already exists, and answering "no" to some of them
+leaves new components sitting next to old data files. That combination
+compiles inconsistently and fails at type-check.
