@@ -10,8 +10,8 @@ export const profile = {
   name: "Albert Addo",
   navTagline: "Mechanical + Aerospace",
   role: "Mechanical & Aerospace Engineer",
-  location: "Melbourne, Florida",
-  locationNote: "Melbourne, FL — open to relocation",
+  location: "Chicago, Illinois + Ithaca, New York + Melbourne, Florida",
+  locationNote: "Chicago, Illinois | Ithaca, New York | Melbourne, Florida — open to relocation",
 
   email: "albertaddo1327@gmail.com",
   linkedin: "https://www.linkedin.com/in/albert-addo/",
