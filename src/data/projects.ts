@@ -985,7 +985,7 @@ export const projects: Project[] = [
       "Teardown, measurement, and animated CAD reconstruction of a 1916 aircraft engine",
     context: "Glenn Curtiss Engine Studio, Cornell University",
     role: "Led the reverse-engineering and CAD reconstruction",
-    status: "Deployed at the Curtiss Museum",
+    status: "Deployed",
     featured: true,
     summary:
       "A 1916 Curtiss OXX-6 Aircraft Engine — one of the first mass-produced American aircraft engines — taken apart, measured, and rebuilt as a complete animated CAD assembly that now drives a museum AR experience.",
