@@ -988,7 +988,7 @@ export const projects: Project[] = [
     status: "Deployed at the Curtiss Museum",
     featured: true,
     summary:
-      "A 1916 Curtiss OXX-6 — one of the first mass-produced American aircraft engines — taken apart, measured, and rebuilt as a complete animated CAD assembly that now drives a museum AR experience.",
+      "A 1916 Curtiss OXX-6 Aircraft Engine — one of the first mass-produced American aircraft engines — taken apart, measured, and rebuilt as a complete animated CAD assembly that now drives a museum AR experience.",
     cardImage: "/img/curtiss-engine-cad.jpg",
     cardImageContain: true,
     tech: [
