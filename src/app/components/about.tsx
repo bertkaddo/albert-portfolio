@@ -15,7 +15,7 @@ export default function About() {
             </div>
 
             <h2 className="text-4xl md:text-5xl font-display font-bold text-ink leading-tight">
-              I build the thing, then I check whether it agrees with the model.
+              Bridging the gap between theory and practice.
             </h2>
 
             <p className="text-lg text-[#4b5763]">

@@ -10,8 +10,8 @@ export const profile = {
   name: "Albert Addo",
   navTagline: "Mechanical + Aerospace",
   role: "Mechanical & Aerospace Engineer",
-  location: "Melbourne, Florida",
-  locationNote: "Melbourne, FL — open to relocation",
+  location: "Chicago, IL | Ithaca, NY | Melbourne, FL",
+  locationNote: "Chicago, Illinois | Ithaca, New York | Melbourne, Florida — open to relocation",
 
   email: "albertaddo1327@gmail.com",
   linkedin: "https://www.linkedin.com/in/albert-addo/",
@@ -29,14 +29,14 @@ export const profile = {
   ],
 
   currentFocus: [
-    "Aircraft performance analysis",
+    "Aerospace systems performance analysis",
     "Physics-based simulation in Python & MATLAB",
     "Test rigs, DAQ, and measurement chains",
   ],
 
   availability: "Early-career engineering roles",
 
-  heroLead: "I build the measurement and the model, then make them agree.",
+  heroLead: "I am passionate about all things aerospace!",
 
   heroBody:
     "Mechanical and aerospace engineer working across test hardware, propulsion and fluid systems, and physics-based simulation — from a hot-wire traverse that gave a wind tunnel its first trustworthy velocity map to a flapping-wing flight model derived from first principles.",
@@ -47,14 +47,14 @@ export const profile = {
       degree: "M.Eng. Aerospace Engineering",
       period: "Dec 2025",
       location: "Ithaca, NY",
-      note: "Advisor: Prof. Jane Wang",
+      note: "Project Advisor: Prof. Jane Wang",
     },
     {
       school: "Cornell University, College of Engineering",
       degree: "B.S. Mechanical Engineering",
       period: "May 2025",
       location: "Ithaca, NY",
-      note: "Sibley School Outstanding Senior Award",
+      note: "Sibley School of Mechanical and Aerospace Engineering Outstanding Senior Award",
     },
   ],
 
