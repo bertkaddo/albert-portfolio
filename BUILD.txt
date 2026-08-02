@@ -1,8 +1,10 @@
 BUILD MARKER
 ============
 
-Revision: 2026-08-02-r8
+Revision: 2026-08-02-r9
 Contents: 11 project case studies, 6 featured on the home page.
+          Embedded YouTube players on the Curtiss engine page.
+          Figure orientations corrected; RL plots 6/6b/8 restored.
 
 Use this file to confirm which copy of the project you are looking at.
 If two folders disagree, the one with the newer Revision line is current.

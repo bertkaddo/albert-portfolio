@@ -120,6 +120,44 @@ export default async function ProjectPage({
           </div>
         </div>
 
+        {/* ---------- Embedded video ---------- */}
+        {project.videos && project.videos.length > 0 && (
+          <div className="px-6 mt-14">
+            <div className="max-w-6xl mx-auto">
+              <div className="rule-label mb-6">
+                <span className="section-kicker">Watch</span>
+              </div>
+              <div
+                className={`grid gap-6 ${
+                  project.videos.length > 1 ? "lg:grid-cols-2" : ""
+                }`}
+              >
+                {project.videos.map((video) => (
+                  <figure key={video.id} className="figure-frame">
+                    <div className="relative w-full aspect-video bg-black">
+                      <iframe
+                        className="absolute inset-0 h-full w-full"
+                        src={`https://www.youtube-nocookie.com/embed/${video.id}`}
+                        title={video.title}
+                        loading="lazy"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                      />
+                    </div>
+                    <figcaption className="figure-caption">
+                      <span className="font-semibold text-ink">
+                        {video.title}
+                      </span>
+                      {video.blurb ? ` — ${video.blurb}` : ""}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* ---------- Body + contents rail ---------- */}
         <div className="px-6 mt-16">
           <div className="max-w-6xl mx-auto grid lg:grid-cols-[220px_1fr] gap-12">

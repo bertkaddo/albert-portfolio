@@ -52,6 +52,9 @@ export type Project = {
   highlights: string[];
   stats: Stat[];
   links?: { label: string; href: string }[];
+  /* Embedded YouTube players, shown above the first section. `id` is the
+     part of the URL after v= or youtu.be/ — not the full URL. */
+  videos?: { id: string; title: string; blurb?: string }[];
   sections: Section[];
 };
 
@@ -1005,11 +1008,18 @@ export const projects: Project[] = [
       { value: "V8", label: "Configuration reconstructed part by part" },
       { value: "0", label: "Reference drawings available at the start" },
     ],
-    links: [
-      { label: "Process video", href: "https://youtu.be/OyDbS1P8vac" },
+    videos: [
       {
-        label: "Results & impact video",
-        href: "https://www.youtube.com/watch?v=eax51gTtaS0",
+        id: "OyDbS1P8vac",
+        title: "Process",
+        blurb:
+          "The teardown, the measurement, and how the CAD reconstruction was built up part by part.",
+      },
+      {
+        id: "eax51gTtaS0",
+        title: "Results and impact",
+        blurb:
+          "The finished model in use — the augmented-reality experience the museum and students now run.",
       },
     ],
     sections: [
