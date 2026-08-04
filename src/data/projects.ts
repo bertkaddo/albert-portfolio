@@ -60,89 +60,117 @@ export type Project = {
 
 export const projects: Project[] = [
   /* ================================================================
-     3 — FORKLIFT ENGINE
+     5 — CURTISS OXX-6
      ================================================================ */
   {
-    slug: "forklift-engine-test",
-    title: "Forklift Engine Test Campaign",
-    shortTitle: "Engine Test Campaign",
+    slug: "curtiss-oxx6-reverse-engineering",
+    title: "Curtiss OXX-6 V8: Reverse Engineering to Augmented Reality",
+    shortTitle: "Curtiss OXX-6 Reverse Engineering",
     subtitle:
-      "Characterizing the performance of a Toyota 15Z inline-six on an instrumented test stand",
-    context: "Toyota Forklift Studio, Cornell University",
-    role: "Team and individual contributions",
-    status: "Completed",
+      "Teardown, measurement, and animated CAD reconstruction of a 1916 aircraft engine",
+    context: "Glenn Curtiss Engine Studio, Cornell University",
+    role: "Led the reverse-engineering and CAD reconstruction",
+    status: "Deployed",
     featured: true,
     summary:
-      "Instrumented engine testing on a production inline-six: in-cylinder pressure–volume work, thermal behaviour under load, and the data reduction that turns raw traces into performance numbers.",
-    cardImage: "/img/forklift-pv-diagram.png",
+      "A 1916 Curtiss OXX-6 Aircraft Engine — one of the first mass-produced American aircraft engines — taken apart, measured, and rebuilt as a complete animated CAD assembly that now drives a museum AR experience.",
+    cardImage: "/img/curtiss-engine-cad.jpg",
     cardImageContain: true,
     tech: [
-      "Engine Testing",
-      "Data Acquisition",
-      "Thermocouples",
-      "Pressure Transducers",
-      "Data Reduction",
+      "Fusion 360",
+      "Reverse Engineering",
+      "Metrology",
+      "CAD Animation",
+      "Augmented Reality",
     ],
     highlights: [
-      "Characterized the performance of a Toyota 15Z inline-six engine on an instrumented stand",
-      "Captured in-cylinder pressure against volume across loaded conditions to extract indicated work per cycle",
-      "Logged multi-channel thermal response through load transitions to observe how the engine sheds heat",
+      "Reconstructed a complete animated assembly with zero reference documentation to work from — every dimension came off the physical engine",
+      "Produced a model the museum and students now use to dissect engine design virtually, rather than through a display case",
+      "Designed and built a custom rotatable 80/20 engine mount, sized to its loads, that cut dismantling time",
     ],
     stats: [
-      { value: "15Z", label: "Toyota inline-six engine under test" },
-      { value: "P–V", label: "Indicated work extracted from in-cylinder pressure traces" },
+      { value: "1916", label: "Year of manufacture — among the first mass-produced US aircraft engines" },
+      { value: "V8", label: "Configuration reconstructed part by part" },
+      { value: "0", label: "Reference drawings available at the start" },
+    ],
+    videos: [
+      {
+        id: "OyDbS1P8vac",
+        title: "Process",
+        blurb:
+          "The teardown, the measurement, and how the CAD reconstruction was built up part by part.",
+      },
+      {
+        id: "eax51gTtaS0",
+        title: "Results and impact",
+        blurb:
+          "The finished model in use — the augmented-reality experience the museum and students now run.",
+      },
     ],
     sections: [
       {
         n: "01",
-        title: "The campaign",
+        title: "The problem with a hundred-year-old engine",
         blocks: [
           {
             kind: "prose",
-            text: "The Toyota Forklift Studio maintains a production 15Z inline-six on an instrumented test stand for teaching engine performance characterization. The work here was measuring what the engine actually does across its operating range — not simulating it.",
+            text: "The Glenn H. Curtiss Museum holds a 1916 Curtiss OXX-6, a V8 that was among the first mass-produced aircraft engines in the United States. What it does not hold is documentation. There were no drawings to work from, no parts list, and no assembly sequence — only the engine itself.",
           },
-          {
-            kind: "figure",
-            src: "/img/forklift-engine.jpg",
-            caption:
-              "Figure 1: The instrumented 15Z on the stand, with sensor leads and thermocouples routed to the acquisition system.",
-          },
-        ],
-      },
-      {
-        n: "02",
-        title: "Measurements",
-        blocks: [
           {
             kind: "prose",
-            text: "The core measurement is in-cylinder pressure against cylinder volume through the cycle. The area enclosed by that loop is the indicated work per cycle, which is what separates what the thermodynamics delivers from what makes it out to the crankshaft after friction and pumping losses.",
+            text: "That makes this a metrology problem before it is a CAD problem. Every dimension in the final model had to be measured off a physical part, and every relationship between parts had to be inferred from how they fit together.",
           },
           {
             kind: "figures",
             items: [
               {
-                src: "/img/forklift-pv-diagram.png",
+                src: "/img/curtiss-teardown.jpg",
                 caption:
-                  "Figure 2: Pressure–volume traces under loaded conditions. The enclosed area gives indicated work per cycle.",
-                contain: true,
+                  "Figure 1: Teardown and measurement in the studio — working the engine down to its individual components.",
               },
               {
-                src: "/img/forklift-temps.jpg",
+                src: "/img/curtiss-engine-lift.jpg",
                 caption:
-                  "Figure 3: Multi-channel temperature response through a load transition.",
-                contain: true,
+                  "Figure 2: Moving the engine in the studio — a hundred-year-old V8 is heavy, fragile, and irreplaceable.",
               },
             ],
           },
+        ],
+      },
+      {
+        n: "02",
+        title: "Reconstruction",
+        blocks: [
           {
             kind: "prose",
-            text: "Alongside the pressure work, multi-channel thermocouple logging tracks how the engine sheds heat as load changes — the divergence between channels after the transition is where the thermal path through the engine becomes visible.",
+            text: "I rebuilt the engine in Fusion 360 as a complete assembly — not a static shell, but a model with the actual kinematic relationships in place, so the crankshaft, connecting rods, pistons, and valvetrain move the way the real mechanism does. Animating the assembly is what turns a model into a teaching artifact: a still render shows what an engine looks like, and an animated one shows what it does.",
           },
           {
             kind: "figure",
-            src: "/img/forklift-daq.jpg",
+            src: "/img/curtiss-engine-cad.jpg",
+            contain: true,
             caption:
-              "Figure 4: Live acquisition during a run — pressure traces streaming to the operator display.",
+              "Figure 3: The reconstructed OXX-6 assembly in Fusion 360.",
+          },
+        ],
+      },
+      {
+        n: "03",
+        title: "From CAD to augmented reality",
+        blocks: [
+          {
+            kind: "prose",
+            text: "The finished model drives an interactive augmented-reality experience the museum and students now use to dissect the engine virtually — pulling apart an assembly that in physical form is far too fragile and far too valuable to hand to a visitor.",
+          },
+          {
+            kind: "figure",
+            src: "/img/curtiss-ar-headset.jpg",
+            caption:
+              "Figure 4: The AR experience in use — the reconstructed engine explored in headset.",
+          },
+          {
+            kind: "callout",
+            text: "A note on identification: my resume previously listed this engine as an OX-5. The museum subsequently reidentified it as an OXX-6, and I have carried that correction forward everywhere since.",
           },
         ],
       },
@@ -807,6 +835,96 @@ export const projects: Project[] = [
   },
 
   /* ================================================================
+     3 — FORKLIFT ENGINE
+     ================================================================ */
+  {
+    slug: "forklift-engine-test",
+    title: "Forklift Engine Test Campaign",
+    shortTitle: "Engine Test Campaign",
+    subtitle:
+      "Characterizing the performance of a Toyota 15Z inline-six on an instrumented test stand",
+    context: "Toyota Forklift Studio, Cornell University",
+    role: "Team and individual contributions",
+    status: "Completed",
+    featured: true,
+    summary:
+      "Instrumented engine testing on a production inline-six: in-cylinder pressure–volume work, thermal behaviour under load, and the data reduction that turns raw traces into performance numbers.",
+    cardImage: "/img/forklift-pv-diagram.png",
+    cardImageContain: true,
+    tech: [
+      "Engine Testing",
+      "Data Acquisition",
+      "Thermocouples",
+      "Pressure Transducers",
+      "Data Reduction",
+    ],
+    highlights: [
+      "Characterized the performance of a Toyota 15Z inline-six engine on an instrumented stand",
+      "Captured in-cylinder pressure against volume across loaded conditions to extract indicated work per cycle",
+      "Logged multi-channel thermal response through load transitions to observe how the engine sheds heat",
+    ],
+    stats: [
+      { value: "15Z", label: "Toyota inline-six engine under test" },
+      { value: "P–V", label: "Indicated work extracted from in-cylinder pressure traces" },
+    ],
+    sections: [
+      {
+        n: "01",
+        title: "The campaign",
+        blocks: [
+          {
+            kind: "prose",
+            text: "The Toyota Forklift Studio maintains a production 15Z inline-six on an instrumented test stand for teaching engine performance characterization. The work here was measuring what the engine actually does across its operating range — not simulating it.",
+          },
+          {
+            kind: "figure",
+            src: "/img/forklift-engine.jpg",
+            caption:
+              "Figure 1: The instrumented 15Z on the stand, with sensor leads and thermocouples routed to the acquisition system.",
+          },
+        ],
+      },
+      {
+        n: "02",
+        title: "Measurements",
+        blocks: [
+          {
+            kind: "prose",
+            text: "The core measurement is in-cylinder pressure against cylinder volume through the cycle. The area enclosed by that loop is the indicated work per cycle, which is what separates what the thermodynamics delivers from what makes it out to the crankshaft after friction and pumping losses.",
+          },
+          {
+            kind: "figures",
+            items: [
+              {
+                src: "/img/forklift-pv-diagram.png",
+                caption:
+                  "Figure 2: Pressure–volume traces under loaded conditions. The enclosed area gives indicated work per cycle.",
+                contain: true,
+              },
+              {
+                src: "/img/forklift-temps.jpg",
+                caption:
+                  "Figure 3: Multi-channel temperature response through a load transition.",
+                contain: true,
+              },
+            ],
+          },
+          {
+            kind: "prose",
+            text: "Alongside the pressure work, multi-channel thermocouple logging tracks how the engine sheds heat as load changes — the divergence between channels after the transition is where the thermal path through the engine becomes visible.",
+          },
+          {
+            kind: "figure",
+            src: "/img/forklift-daq.jpg",
+            caption:
+              "Figure 4: Live acquisition during a run — pressure traces streaming to the operator display.",
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ================================================================
      4 — GLIDER
      ================================================================ */
   {
@@ -968,124 +1086,6 @@ export const projects: Project[] = [
           {
             kind: "prose",
             text: "Scaling to the fictional atmosphere exposed a second limit. Matching Reynolds number across a 150× density drop and a 1.5× viscosity drop forces a velocity ratio of 14.2 and a length ratio of 7.03, giving a 6 m wingspan flying at 71.1 m/s — Mach 0.59 in that atmosphere, far outside anything a glider does on Earth, and at 2.51 kg too light to carry meaningful instrumentation. The scaled design is a valid similitude result and an invalid aircraft, which is itself the useful finding.",
-          },
-        ],
-      },
-    ],
-  },
-
-  /* ================================================================
-     5 — CURTISS OXX-6
-     ================================================================ */
-  {
-    slug: "curtiss-oxx6-reverse-engineering",
-    title: "Curtiss OXX-6 V8: Reverse Engineering to Augmented Reality",
-    shortTitle: "Curtiss OXX-6 Reverse Engineering",
-    subtitle:
-      "Teardown, measurement, and animated CAD reconstruction of a 1916 aircraft engine",
-    context: "Glenn Curtiss Engine Studio, Cornell University",
-    role: "Led the reverse-engineering and CAD reconstruction",
-    status: "Deployed",
-    featured: true,
-    summary:
-      "A 1916 Curtiss OXX-6 Aircraft Engine — one of the first mass-produced American aircraft engines — taken apart, measured, and rebuilt as a complete animated CAD assembly that now drives a museum AR experience.",
-    cardImage: "/img/curtiss-engine-cad.jpg",
-    cardImageContain: true,
-    tech: [
-      "Fusion 360",
-      "Reverse Engineering",
-      "Metrology",
-      "CAD Animation",
-      "Augmented Reality",
-    ],
-    highlights: [
-      "Reconstructed a complete animated assembly with zero reference documentation to work from — every dimension came off the physical engine",
-      "Produced a model the museum and students now use to dissect engine design virtually, rather than through a display case",
-      "Designed and built a custom rotatable 80/20 engine mount, sized to its loads, that cut dismantling time",
-    ],
-    stats: [
-      { value: "1916", label: "Year of manufacture — among the first mass-produced US aircraft engines" },
-      { value: "V8", label: "Configuration reconstructed part by part" },
-      { value: "0", label: "Reference drawings available at the start" },
-    ],
-    videos: [
-      {
-        id: "OyDbS1P8vac",
-        title: "Process",
-        blurb:
-          "The teardown, the measurement, and how the CAD reconstruction was built up part by part.",
-      },
-      {
-        id: "eax51gTtaS0",
-        title: "Results and impact",
-        blurb:
-          "The finished model in use — the augmented-reality experience the museum and students now run.",
-      },
-    ],
-    sections: [
-      {
-        n: "01",
-        title: "The problem with a hundred-year-old engine",
-        blocks: [
-          {
-            kind: "prose",
-            text: "The Glenn H. Curtiss Museum holds a 1916 Curtiss OXX-6, a V8 that was among the first mass-produced aircraft engines in the United States. What it does not hold is documentation. There were no drawings to work from, no parts list, and no assembly sequence — only the engine itself.",
-          },
-          {
-            kind: "prose",
-            text: "That makes this a metrology problem before it is a CAD problem. Every dimension in the final model had to be measured off a physical part, and every relationship between parts had to be inferred from how they fit together.",
-          },
-          {
-            kind: "figures",
-            items: [
-              {
-                src: "/img/curtiss-teardown.jpg",
-                caption:
-                  "Figure 1: Teardown and measurement in the studio — working the engine down to its individual components.",
-              },
-              {
-                src: "/img/curtiss-engine-lift.jpg",
-                caption:
-                  "Figure 2: Moving the engine in the studio — a hundred-year-old V8 is heavy, fragile, and irreplaceable.",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        n: "02",
-        title: "Reconstruction",
-        blocks: [
-          {
-            kind: "prose",
-            text: "I rebuilt the engine in Fusion 360 as a complete assembly — not a static shell, but a model with the actual kinematic relationships in place, so the crankshaft, connecting rods, pistons, and valvetrain move the way the real mechanism does. Animating the assembly is what turns a model into a teaching artifact: a still render shows what an engine looks like, and an animated one shows what it does.",
-          },
-          {
-            kind: "figure",
-            src: "/img/curtiss-engine-cad.jpg",
-            contain: true,
-            caption:
-              "Figure 3: The reconstructed OXX-6 assembly in Fusion 360.",
-          },
-        ],
-      },
-      {
-        n: "03",
-        title: "From CAD to augmented reality",
-        blocks: [
-          {
-            kind: "prose",
-            text: "The finished model drives an interactive augmented-reality experience the museum and students now use to dissect the engine virtually — pulling apart an assembly that in physical form is far too fragile and far too valuable to hand to a visitor.",
-          },
-          {
-            kind: "figure",
-            src: "/img/curtiss-ar-headset.jpg",
-            caption:
-              "Figure 4: The AR experience in use — the reconstructed engine explored in headset.",
-          },
-          {
-            kind: "callout",
-            text: "A note on identification: my resume previously listed this engine as an OX-5. The museum subsequently reidentified it as an OXX-6, and I have carried that correction forward everywhere since.",
           },
         ],
       },
