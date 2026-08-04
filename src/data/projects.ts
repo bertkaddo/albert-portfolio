@@ -60,6 +60,96 @@ export type Project = {
 
 export const projects: Project[] = [
   /* ================================================================
+     3 — FORKLIFT ENGINE
+     ================================================================ */
+  {
+    slug: "forklift-engine-test",
+    title: "Forklift Engine Test Campaign",
+    shortTitle: "Engine Test Campaign",
+    subtitle:
+      "Characterizing the performance of a Toyota 15Z inline-six on an instrumented test stand",
+    context: "Toyota Forklift Studio, Cornell University",
+    role: "Team and individual contributions",
+    status: "Completed",
+    featured: true,
+    summary:
+      "Instrumented engine testing on a production inline-six: in-cylinder pressure–volume work, thermal behaviour under load, and the data reduction that turns raw traces into performance numbers.",
+    cardImage: "/img/forklift-pv-diagram.png",
+    cardImageContain: true,
+    tech: [
+      "Engine Testing",
+      "Data Acquisition",
+      "Thermocouples",
+      "Pressure Transducers",
+      "Data Reduction",
+    ],
+    highlights: [
+      "Characterized the performance of a Toyota 15Z inline-six engine on an instrumented stand",
+      "Captured in-cylinder pressure against volume across loaded conditions to extract indicated work per cycle",
+      "Logged multi-channel thermal response through load transitions to observe how the engine sheds heat",
+    ],
+    stats: [
+      { value: "15Z", label: "Toyota inline-six engine under test" },
+      { value: "P–V", label: "Indicated work extracted from in-cylinder pressure traces" },
+    ],
+    sections: [
+      {
+        n: "01",
+        title: "The campaign",
+        blocks: [
+          {
+            kind: "prose",
+            text: "The Toyota Forklift Studio maintains a production 15Z inline-six on an instrumented test stand for teaching engine performance characterization. The work here was measuring what the engine actually does across its operating range — not simulating it.",
+          },
+          {
+            kind: "figure",
+            src: "/img/forklift-engine.jpg",
+            caption:
+              "Figure 1: The instrumented 15Z on the stand, with sensor leads and thermocouples routed to the acquisition system.",
+          },
+        ],
+      },
+      {
+        n: "02",
+        title: "Measurements",
+        blocks: [
+          {
+            kind: "prose",
+            text: "The core measurement is in-cylinder pressure against cylinder volume through the cycle. The area enclosed by that loop is the indicated work per cycle, which is what separates what the thermodynamics delivers from what makes it out to the crankshaft after friction and pumping losses.",
+          },
+          {
+            kind: "figures",
+            items: [
+              {
+                src: "/img/forklift-pv-diagram.png",
+                caption:
+                  "Figure 2: Pressure–volume traces under loaded conditions. The enclosed area gives indicated work per cycle.",
+                contain: true,
+              },
+              {
+                src: "/img/forklift-temps.jpg",
+                caption:
+                  "Figure 3: Multi-channel temperature response through a load transition.",
+                contain: true,
+              },
+            ],
+          },
+          {
+            kind: "prose",
+            text: "Alongside the pressure work, multi-channel thermocouple logging tracks how the engine sheds heat as load changes — the divergence between channels after the transition is where the thermal path through the engine becomes visible.",
+          },
+          {
+            kind: "figure",
+            src: "/img/forklift-daq.jpg",
+            caption:
+              "Figure 4: Live acquisition during a run — pressure traces streaming to the operator display.",
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ================================================================
      1 — HOT-WIRE TRAVERSE
      ================================================================ */
   {
@@ -710,96 +800,6 @@ export const projects: Project[] = [
             kind: "figure",
             src: "/img/pump-team.jpg",
             caption: "Figure 15: Group 10 on test day.",
-          },
-        ],
-      },
-    ],
-  },
-
-  /* ================================================================
-     3 — FORKLIFT ENGINE
-     ================================================================ */
-  {
-    slug: "forklift-engine-test",
-    title: "Forklift Engine Test Campaign",
-    shortTitle: "Engine Test Campaign",
-    subtitle:
-      "Characterizing the performance of a Toyota 15Z inline-six on an instrumented test stand",
-    context: "Toyota Forklift Studio, Cornell University",
-    role: "Team and individual contributions",
-    status: "Completed",
-    featured: true,
-    summary:
-      "Instrumented engine testing on a production inline-six: in-cylinder pressure–volume work, thermal behaviour under load, and the data reduction that turns raw traces into performance numbers.",
-    cardImage: "/img/forklift-pv-diagram.png",
-    cardImageContain: true,
-    tech: [
-      "Engine Testing",
-      "Data Acquisition",
-      "Thermocouples",
-      "Pressure Transducers",
-      "Data Reduction",
-    ],
-    highlights: [
-      "Characterized the performance of a Toyota 15Z inline-six engine on an instrumented stand",
-      "Captured in-cylinder pressure against volume across loaded conditions to extract indicated work per cycle",
-      "Logged multi-channel thermal response through load transitions to observe how the engine sheds heat",
-    ],
-    stats: [
-      { value: "15Z", label: "Toyota inline-six engine under test" },
-      { value: "P–V", label: "Indicated work extracted from in-cylinder pressure traces" },
-    ],
-    sections: [
-      {
-        n: "01",
-        title: "The campaign",
-        blocks: [
-          {
-            kind: "prose",
-            text: "The Toyota Forklift Studio maintains a production 15Z inline-six on an instrumented test stand for teaching engine performance characterization. The work here was measuring what the engine actually does across its operating range — not simulating it.",
-          },
-          {
-            kind: "figure",
-            src: "/img/forklift-engine.jpg",
-            caption:
-              "Figure 1: The instrumented 15Z on the stand, with sensor leads and thermocouples routed to the acquisition system.",
-          },
-        ],
-      },
-      {
-        n: "02",
-        title: "Measurements",
-        blocks: [
-          {
-            kind: "prose",
-            text: "The core measurement is in-cylinder pressure against cylinder volume through the cycle. The area enclosed by that loop is the indicated work per cycle, which is what separates what the thermodynamics delivers from what makes it out to the crankshaft after friction and pumping losses.",
-          },
-          {
-            kind: "figures",
-            items: [
-              {
-                src: "/img/forklift-pv-diagram.png",
-                caption:
-                  "Figure 2: Pressure–volume traces under loaded conditions. The enclosed area gives indicated work per cycle.",
-                contain: true,
-              },
-              {
-                src: "/img/forklift-temps.jpg",
-                caption:
-                  "Figure 3: Multi-channel temperature response through a load transition.",
-                contain: true,
-              },
-            ],
-          },
-          {
-            kind: "prose",
-            text: "Alongside the pressure work, multi-channel thermocouple logging tracks how the engine sheds heat as load changes — the divergence between channels after the transition is where the thermal path through the engine becomes visible.",
-          },
-          {
-            kind: "figure",
-            src: "/img/forklift-daq.jpg",
-            caption:
-              "Figure 4: Live acquisition during a run — pressure traces streaming to the operator display.",
           },
         ],
       },
