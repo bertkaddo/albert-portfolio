@@ -65,7 +65,7 @@ export const projects: Project[] = [
   {
     slug: "curtiss-oxx6-reverse-engineering",
     title: "Curtiss OXX-6 V8: Reverse Engineering to Augmented Reality",
-    shortTitle: "Curtiss OXX-6 Reverse Engineering",
+    shortTitle: "Curtiss OXX-6 Aircraft Engine Reverse Engineering",
     subtitle:
       "Teardown, measurement, and animated CAD reconstruction of a 1916 aircraft engine",
     context: "Glenn Curtiss Engine Studio, Cornell University",
@@ -835,6 +835,271 @@ export const projects: Project[] = [
   },
 
   /* ================================================================
+     8 — FLAPPING WING RL
+     ================================================================ */
+  {
+    slug: "flapping-wing-rl",
+    title:
+      "Reinforcement Learning for Wing Kinematics in Hovering Flight",
+    shortTitle: "Flapping-Wing Flight & RL",
+    subtitle:
+      "Nonlinear equations of motion, quasi-steady aerodynamics, and a PPO agent",
+    context:
+      "M.Eng. Aerospace Engineering project, Cornell University — advisor Prof. Jane Wang",
+    role: "Sole author",
+    status: "Completed",
+    featured: true,
+    summary:
+      "Derived the full nonlinear dynamics of a flapping-wing flyer from first principles, built the simulation in Python, and trained a PPO agent to search wing kinematics for hover.",
+    cardImage: "/img/rl-frames-rear.png",
+    cardImageContain: true,
+    tech: [
+      "Python",
+      "SymPy",
+      "SciPy RK45",
+      "Stable-Baselines3",
+      "PPO",
+      "Blade Element Method",
+      "Gauss–Legendre",
+    ],
+    highlights: [
+      "Identified hovering-capable wing kinematics analytically, holding lateral drift to 3 mm and vertical drift to 1.12 mm over 10 simulated seconds",
+      "Trained a PPO agent that improved episode reward mean by more than 75% across ~196 iterations of a 17-hour run",
+      "Diagnosed why the policy approached but did not reach sustained hover — reward conditioning and action-space scale, not the physics model",
+    ],
+    stats: [
+      { value: "+75%", label: "Episode reward mean improvement over training" },
+      { value: "196", label: "PPO iterations in the extended training run" },
+      { value: "1.12 mm", label: "Vertical drift over 10 s at the identified hover point" },
+      { value: "2 DOF", label: "Per wing — flapping and pitching, pinned at the root" },
+    ],
+    sections: [
+      {
+        n: "01",
+        title: "Why flapping flight resists analysis",
+        blocks: [
+          {
+            kind: "prose",
+            text: "Flapping-wing flight is governed by highly nonlinear, unsteady aerodynamic interactions that make both analytical modeling and control design difficult. Unlike a fixed wing, the aerodynamic environment a flapping wing sees changes continuously within a single stroke, and the body responds to those forces on the same timescale. There is no clean separation between the aerodynamics and the rigid-body dynamics.",
+          },
+          {
+            kind: "prose",
+            text: "This project builds a reduced-order dynamic model of a flapping system with an ellipsoidal body and rigid wings capable of symmetric flapping and pitching, then asks whether a reinforcement learning agent can discover wing kinematics that hold the body in place.",
+          },
+          {
+            kind: "figures",
+            items: [
+              {
+                src: "/img/rl-frames-rear.png",
+                caption:
+                  "Figure 1: Rear view of the flapping system, showing the inertial, body, and wing reference frames.",
+                contain: true,
+              },
+              {
+                src: "/img/rl-frames-lateral.png",
+                caption:
+                  "Figure 2: Upper-right lateral view of the same system.",
+                contain: true,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        n: "02",
+        title: "Deriving the equations of motion",
+        blocks: [
+          {
+            kind: "prose",
+            text: "I set up three reference frames — inertial, body, and wing — connected by direction cosine matrices, then applied Newton's second law to the coupled body-plus-wings system. Each wing carries two degrees of freedom, flapping angle φ and pitch angle ψ, pinned at the root. Because the wings carry mass and accelerate relative to the body, the body-frame acceleration terms have to be resolved back into inertial coordinates before the force balance closes.",
+          },
+          {
+            kind: "figures",
+            items: [
+              {
+                src: "/img/rl-fbd.png",
+                caption:
+                  "Figure 3: Free-body diagram of the flapping system with aerodynamic loading distributed along the wing.",
+                contain: true,
+              },
+              {
+                src: "/img/rl-wing-element.png",
+                caption:
+                  "Figure 4: Wing element definition used for the blade-element integration.",
+                contain: true,
+              },
+            ],
+          },
+          {
+            kind: "prose",
+            text: "Aerodynamic forces come from a thin-body quasi-steady model in the tradition of Andersen, Pesavento and Wang, applied strip-by-strip along the span and integrated numerically. The symbolic derivation was done in SymPy so the resulting expressions could be differentiated and verified rather than hand-transcribed, and the resulting system is integrated with SciPy's RK45.",
+          },
+          {
+            kind: "equation",
+            lines: [
+              "φ(t) = A_φ · cos(ω_φ t) + φ_c",
+              "ψ(t) = (ψ₊ − ψ₋) · sin(ω_φ t) + ψ_c ,   ψ_c = (ψ₊ + ψ₋) / 2",
+            ],
+          },
+          {
+            kind: "figure",
+            src: "/img/rl-wing-angles.png",
+            contain: true,
+            caption:
+              "Figure 4b: Commanded wing angles over time — flapping angle φ and pitch angle ψ sharing a frequency but offset in phase.",
+          },
+          {
+            kind: "prose",
+            text: "Splitting ψ between upstroke and downstroke — rather than holding pitch constant — is what gives the model control authority over translational motion. The sine form for ψ against the cosine form for φ places maximum pitch at the stroke reversals, where it does the most work.",
+          },
+        ],
+      },
+      {
+        n: "03",
+        title: "Finding hover from first principles",
+        blocks: [
+          {
+            kind: "prose",
+            text: "Before handing anything to a learning agent, I validated the equations of motion by sweeping the kinematic parameters directly, using dimensionless coefficients scaled to a housefly. Hovering flight showed up at a specific combination:",
+          },
+          {
+            kind: "equation",
+            lines: [
+              "A_φ = 60°    φ_c = 30°    ω_φ = 30.04 Hz",
+              "ψ₊ = 87°     ψ₋ = 4°      ψ_c = 45.5°",
+            ],
+          },
+          {
+            kind: "figures",
+            items: [
+              {
+                src: "/img/rl-y-position.png",
+                caption:
+                  "Figure 5: Lateral position over time at the identified hover point — y varies by only 3 mm across 10 seconds.",
+                contain: true,
+              },
+              {
+                src: "/img/rl-z-position.png",
+                caption:
+                  "Figure 6: Vertical position over the same interval — z falls by 1.12 mm in 10 seconds.",
+                contain: true,
+              },
+            ],
+          },
+          {
+            kind: "figure",
+            src: "/img/rl-hover-trajectory.png",
+            contain: true,
+            caption:
+              "Figure 6b: The resulting trajectory in the y–z plane. The body traces a tight closed loop within a few millimetres rather than drifting away — this is what the learning agent was later asked to rediscover.",
+          },
+          {
+            kind: "callout",
+            text: "This result is the load-bearing one for the whole project: it establishes that the dynamics model can produce hover, so any later failure to learn hover is a property of the learning setup rather than of the physics.",
+          },
+        ],
+      },
+      {
+        n: "04",
+        title: "The learning environment",
+        blocks: [
+          {
+            kind: "prose",
+            text: "I wrapped the simulation in a reinforcement learning environment where the agent adjusts the kinematic parameters — amplitudes, phase offsets, and wingbeat frequency — rather than commanding torques directly. Actions are smoothed between steps so the wing motion stays kinematically continuous instead of jumping discontinuously between wingbeats.",
+          },
+          {
+            kind: "prose",
+            text: "The reward is segment-based: within each evaluation window, a least-squares trend is fit to the body's y and z trajectories, and the agent is penalized on both the intercept difference and the slope difference from the target. Penalizing slope rather than only position is what makes the reward robust to the oscillation inherent in flapping flight — a body that bobs around a fixed point should not be punished the way a body that steadily drifts is.",
+          },
+          {
+            kind: "list",
+            items: [
+              "Algorithm: Proximal Policy Optimization (PPO), continuous action space",
+              "Physics: full nonlinear EOM integrated in-loop at every environment step",
+              "Aerodynamics: quasi-steady blade element with Gauss–Legendre spanwise integration",
+              "Reward: least-squares trend extraction over trajectory segments, penalizing intercept and slope",
+            ],
+          },
+        ],
+      },
+      {
+        n: "05",
+        title: "Results",
+        blocks: [
+          {
+            kind: "prose",
+            text: "The first training attempts did not learn. Both the episode reward mean and the action-distribution standard deviation stayed nearly flat across iterations, which told me the policy was neither exploring nor improving. The problem was conditioning, not capability: the action space was too large and the reward too simply defined for the optimizer to find structure.",
+          },
+          {
+            kind: "prose",
+            text: "Tightening the action bounds and rescaling the reward produced the first genuine learning signal — episode reward rose over 25% and the policy visibly reduced lateral drift. With learning confirmed, I reverted to the originally intended reward formulation and launched a much longer run.",
+          },
+          {
+            kind: "figures",
+            items: [
+              {
+                src: "/img/rl-learned-kinematics.png",
+                caption:
+                  "Figure 7: Wing kinematics the policy converged on during the extended run.",
+                contain: true,
+              },
+              {
+                src: "/img/rl-training-trajectory.png",
+                caption:
+                  "Figure 8: Body trajectory under the learned policy.",
+                contain: true,
+              },
+            ],
+          },
+          {
+            kind: "prose",
+            text: "Across roughly 196 iterations of that extended run — about 17 hours of training — the episode reward mean increased by more than 75% while the action distribution standard deviation steadily narrowed. Both signals point the same way: the policy was consistently selecting wingbeat parameters that reduced body drift, and it was becoming more confident about them.",
+          },
+          {
+            kind: "figures",
+            items: [
+              {
+                src: "/img/rl-final-displacements.png",
+                caption:
+                  "Figure 9: Final y and z displacements over the evaluation interval.",
+                contain: true,
+              },
+              {
+                src: "/img/rl-final-kinematics.png",
+                caption:
+                  "Figure 10: Final learned wing kinematics — note the amplitude the policy settles on.",
+                contain: true,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        n: "06",
+        title: "What it did and did not achieve",
+        blocks: [
+          {
+            kind: "prose",
+            text: "The PPO agent did not achieve sustained stable hover. It approached it — improving trajectory performance substantially and learning structured, physically plausible flapping motions — but the policy did not converge on the kind of stationary flight the hand-identified kinematics demonstrate.",
+          },
+          {
+            kind: "prose",
+            text: "The most likely cause sits in the reward shaping. Examining the learned kinematics, the reward appears to indirectly over-penalize large amplitudes and high frequencies, which are exactly the regions where hover lives. A policy that is punished for approaching the answer will stop short of it.",
+          },
+          {
+            kind: "callout",
+            text: "The honest read: the pipeline captures nontrivial aerodynamic relationships and demonstrably learns, and the physics model provably supports hover. The gap is in reward design and policy structure — which is a much more tractable problem than a gap in the dynamics would have been.",
+          },
+          {
+            kind: "prose",
+            text: "This was my first application of reinforcement learning to a physics-driven control problem. Coming from deterministic modeling, rigid-body dynamics, and numerical simulation, integrating policy-based learning and stochastic optimization required stepping well outside my usual analytical framework — which was much of the point.",
+          },
+        ],
+      },
+    ],
+  },
+
+  /* ================================================================
      3 — FORKLIFT ENGINE
      ================================================================ */
   {
@@ -1245,7 +1510,7 @@ export const projects: Project[] = [
     context: "Wind Tunnel Studio, Cornell University",
     role: "Sole author — aerodynamic model, section-property routine, and beam solver",
     status: "Completed",
-    featured: false,
+    featured: true,
     summary:
       "A MATLAB model written from scratch to test whether blade flex explained a 22% power shortfall. It takes airfoil polars and a blade planform and returns the deflected shape under aerodynamic load.",
     cardImage: "/img/blade-3d-sg6043.png",
@@ -1522,271 +1787,6 @@ export const projects: Project[] = [
           {
             kind: "prose",
             text: "The two changes that would most improve fidelity, in order: add the centrifugal stiffening term to the moment balance, and iterate the BEM solve on the deflected geometry so load and shape converge together.",
-          },
-        ],
-      },
-    ],
-  },
-
-  /* ================================================================
-     8 — FLAPPING WING RL
-     ================================================================ */
-  {
-    slug: "flapping-wing-rl",
-    title:
-      "Reinforcement Learning for Wing Kinematics in Hovering Flight",
-    shortTitle: "Flapping-Wing Flight & RL",
-    subtitle:
-      "Nonlinear equations of motion, quasi-steady aerodynamics, and a PPO agent",
-    context:
-      "M.Eng. Aerospace Engineering project, Cornell University — advisor Prof. Jane Wang",
-    role: "Sole author",
-    status: "Completed",
-    featured: false,
-    summary:
-      "Derived the full nonlinear dynamics of a flapping-wing flyer from first principles, built the simulation in Python, and trained a PPO agent to search wing kinematics for hover.",
-    cardImage: "/img/rl-frames-rear.png",
-    cardImageContain: true,
-    tech: [
-      "Python",
-      "SymPy",
-      "SciPy RK45",
-      "Stable-Baselines3",
-      "PPO",
-      "Blade Element Method",
-      "Gauss–Legendre",
-    ],
-    highlights: [
-      "Identified hovering-capable wing kinematics analytically, holding lateral drift to 3 mm and vertical drift to 1.12 mm over 10 simulated seconds",
-      "Trained a PPO agent that improved episode reward mean by more than 75% across ~196 iterations of a 17-hour run",
-      "Diagnosed why the policy approached but did not reach sustained hover — reward conditioning and action-space scale, not the physics model",
-    ],
-    stats: [
-      { value: "+75%", label: "Episode reward mean improvement over training" },
-      { value: "196", label: "PPO iterations in the extended training run" },
-      { value: "1.12 mm", label: "Vertical drift over 10 s at the identified hover point" },
-      { value: "2 DOF", label: "Per wing — flapping and pitching, pinned at the root" },
-    ],
-    sections: [
-      {
-        n: "01",
-        title: "Why flapping flight resists analysis",
-        blocks: [
-          {
-            kind: "prose",
-            text: "Flapping-wing flight is governed by highly nonlinear, unsteady aerodynamic interactions that make both analytical modeling and control design difficult. Unlike a fixed wing, the aerodynamic environment a flapping wing sees changes continuously within a single stroke, and the body responds to those forces on the same timescale. There is no clean separation between the aerodynamics and the rigid-body dynamics.",
-          },
-          {
-            kind: "prose",
-            text: "This project builds a reduced-order dynamic model of a flapping system with an ellipsoidal body and rigid wings capable of symmetric flapping and pitching, then asks whether a reinforcement learning agent can discover wing kinematics that hold the body in place.",
-          },
-          {
-            kind: "figures",
-            items: [
-              {
-                src: "/img/rl-frames-rear.png",
-                caption:
-                  "Figure 1: Rear view of the flapping system, showing the inertial, body, and wing reference frames.",
-                contain: true,
-              },
-              {
-                src: "/img/rl-frames-lateral.png",
-                caption:
-                  "Figure 2: Upper-right lateral view of the same system.",
-                contain: true,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        n: "02",
-        title: "Deriving the equations of motion",
-        blocks: [
-          {
-            kind: "prose",
-            text: "I set up three reference frames — inertial, body, and wing — connected by direction cosine matrices, then applied Newton's second law to the coupled body-plus-wings system. Each wing carries two degrees of freedom, flapping angle φ and pitch angle ψ, pinned at the root. Because the wings carry mass and accelerate relative to the body, the body-frame acceleration terms have to be resolved back into inertial coordinates before the force balance closes.",
-          },
-          {
-            kind: "figures",
-            items: [
-              {
-                src: "/img/rl-fbd.png",
-                caption:
-                  "Figure 3: Free-body diagram of the flapping system with aerodynamic loading distributed along the wing.",
-                contain: true,
-              },
-              {
-                src: "/img/rl-wing-element.png",
-                caption:
-                  "Figure 4: Wing element definition used for the blade-element integration.",
-                contain: true,
-              },
-            ],
-          },
-          {
-            kind: "prose",
-            text: "Aerodynamic forces come from a thin-body quasi-steady model in the tradition of Andersen, Pesavento and Wang, applied strip-by-strip along the span and integrated numerically. The symbolic derivation was done in SymPy so the resulting expressions could be differentiated and verified rather than hand-transcribed, and the resulting system is integrated with SciPy's RK45.",
-          },
-          {
-            kind: "equation",
-            lines: [
-              "φ(t) = A_φ · cos(ω_φ t) + φ_c",
-              "ψ(t) = (ψ₊ − ψ₋) · sin(ω_φ t) + ψ_c ,   ψ_c = (ψ₊ + ψ₋) / 2",
-            ],
-          },
-          {
-            kind: "figure",
-            src: "/img/rl-wing-angles.png",
-            contain: true,
-            caption:
-              "Figure 4b: Commanded wing angles over time — flapping angle φ and pitch angle ψ sharing a frequency but offset in phase.",
-          },
-          {
-            kind: "prose",
-            text: "Splitting ψ between upstroke and downstroke — rather than holding pitch constant — is what gives the model control authority over translational motion. The sine form for ψ against the cosine form for φ places maximum pitch at the stroke reversals, where it does the most work.",
-          },
-        ],
-      },
-      {
-        n: "03",
-        title: "Finding hover from first principles",
-        blocks: [
-          {
-            kind: "prose",
-            text: "Before handing anything to a learning agent, I validated the equations of motion by sweeping the kinematic parameters directly, using dimensionless coefficients scaled to a housefly. Hovering flight showed up at a specific combination:",
-          },
-          {
-            kind: "equation",
-            lines: [
-              "A_φ = 60°    φ_c = 30°    ω_φ = 30.04 Hz",
-              "ψ₊ = 87°     ψ₋ = 4°      ψ_c = 45.5°",
-            ],
-          },
-          {
-            kind: "figures",
-            items: [
-              {
-                src: "/img/rl-y-position.png",
-                caption:
-                  "Figure 5: Lateral position over time at the identified hover point — y varies by only 3 mm across 10 seconds.",
-                contain: true,
-              },
-              {
-                src: "/img/rl-z-position.png",
-                caption:
-                  "Figure 6: Vertical position over the same interval — z falls by 1.12 mm in 10 seconds.",
-                contain: true,
-              },
-            ],
-          },
-          {
-            kind: "figure",
-            src: "/img/rl-hover-trajectory.png",
-            contain: true,
-            caption:
-              "Figure 6b: The resulting trajectory in the y–z plane. The body traces a tight closed loop within a few millimetres rather than drifting away — this is what the learning agent was later asked to rediscover.",
-          },
-          {
-            kind: "callout",
-            text: "This result is the load-bearing one for the whole project: it establishes that the dynamics model can produce hover, so any later failure to learn hover is a property of the learning setup rather than of the physics.",
-          },
-        ],
-      },
-      {
-        n: "04",
-        title: "The learning environment",
-        blocks: [
-          {
-            kind: "prose",
-            text: "I wrapped the simulation in a reinforcement learning environment where the agent adjusts the kinematic parameters — amplitudes, phase offsets, and wingbeat frequency — rather than commanding torques directly. Actions are smoothed between steps so the wing motion stays kinematically continuous instead of jumping discontinuously between wingbeats.",
-          },
-          {
-            kind: "prose",
-            text: "The reward is segment-based: within each evaluation window, a least-squares trend is fit to the body's y and z trajectories, and the agent is penalized on both the intercept difference and the slope difference from the target. Penalizing slope rather than only position is what makes the reward robust to the oscillation inherent in flapping flight — a body that bobs around a fixed point should not be punished the way a body that steadily drifts is.",
-          },
-          {
-            kind: "list",
-            items: [
-              "Algorithm: Proximal Policy Optimization (PPO), continuous action space",
-              "Physics: full nonlinear EOM integrated in-loop at every environment step",
-              "Aerodynamics: quasi-steady blade element with Gauss–Legendre spanwise integration",
-              "Reward: least-squares trend extraction over trajectory segments, penalizing intercept and slope",
-            ],
-          },
-        ],
-      },
-      {
-        n: "05",
-        title: "Results",
-        blocks: [
-          {
-            kind: "prose",
-            text: "The first training attempts did not learn. Both the episode reward mean and the action-distribution standard deviation stayed nearly flat across iterations, which told me the policy was neither exploring nor improving. The problem was conditioning, not capability: the action space was too large and the reward too simply defined for the optimizer to find structure.",
-          },
-          {
-            kind: "prose",
-            text: "Tightening the action bounds and rescaling the reward produced the first genuine learning signal — episode reward rose over 25% and the policy visibly reduced lateral drift. With learning confirmed, I reverted to the originally intended reward formulation and launched a much longer run.",
-          },
-          {
-            kind: "figures",
-            items: [
-              {
-                src: "/img/rl-learned-kinematics.png",
-                caption:
-                  "Figure 7: Wing kinematics the policy converged on during the extended run.",
-                contain: true,
-              },
-              {
-                src: "/img/rl-training-trajectory.png",
-                caption:
-                  "Figure 8: Body trajectory under the learned policy.",
-                contain: true,
-              },
-            ],
-          },
-          {
-            kind: "prose",
-            text: "Across roughly 196 iterations of that extended run — about 17 hours of training — the episode reward mean increased by more than 75% while the action distribution standard deviation steadily narrowed. Both signals point the same way: the policy was consistently selecting wingbeat parameters that reduced body drift, and it was becoming more confident about them.",
-          },
-          {
-            kind: "figures",
-            items: [
-              {
-                src: "/img/rl-final-displacements.png",
-                caption:
-                  "Figure 9: Final y and z displacements over the evaluation interval.",
-                contain: true,
-              },
-              {
-                src: "/img/rl-final-kinematics.png",
-                caption:
-                  "Figure 10: Final learned wing kinematics — note the amplitude the policy settles on.",
-                contain: true,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        n: "06",
-        title: "What it did and did not achieve",
-        blocks: [
-          {
-            kind: "prose",
-            text: "The PPO agent did not achieve sustained stable hover. It approached it — improving trajectory performance substantially and learning structured, physically plausible flapping motions — but the policy did not converge on the kind of stationary flight the hand-identified kinematics demonstrate.",
-          },
-          {
-            kind: "prose",
-            text: "The most likely cause sits in the reward shaping. Examining the learned kinematics, the reward appears to indirectly over-penalize large amplitudes and high frequencies, which are exactly the regions where hover lives. A policy that is punished for approaching the answer will stop short of it.",
-          },
-          {
-            kind: "callout",
-            text: "The honest read: the pipeline captures nontrivial aerodynamic relationships and demonstrably learns, and the physics model provably supports hover. The gap is in reward design and policy structure — which is a much more tractable problem than a gap in the dynamics would have been.",
-          },
-          {
-            kind: "prose",
-            text: "This was my first application of reinforcement learning to a physics-driven control problem. Coming from deterministic modeling, rigid-body dynamics, and numerical simulation, integrating policy-based learning and stochastic optimization required stepping well outside my usual analytical framework — which was much of the point.",
           },
         ],
       },
