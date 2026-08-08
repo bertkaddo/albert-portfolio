@@ -857,7 +857,7 @@ export const projects: Project[] = [
     cardImageContain: true,
     documents: [
       {
-        file: "/Albert_Addo_MEng_Report.pdf",
+        file: "/Addo_Albert_2025_Final_Report.pdf",
         title: "M.Eng. Final Report",
         blurb:
           "The full 66-page report: frame definitions, the symbolic derivation of the equations of motion, the blade-element aerodynamic model, the hover parameter study, and every reinforcement-learning run.",
