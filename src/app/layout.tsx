@@ -9,9 +9,9 @@ import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
 import "@fontsource/ibm-plex-mono/600.css";
 
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { profile } from "@/data/profile";
-import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: `${profile.name} — Mechanical & Aerospace Engineer`,
@@ -34,6 +34,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning className="antialiased">
         {children}
+        <Analytics />
       </body>
     </html>
   );
