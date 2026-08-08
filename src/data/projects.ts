@@ -55,6 +55,8 @@ export type Project = {
   /* Embedded YouTube players, shown above the first section. `id` is the
      part of the URL after v= or youtu.be/ — not the full URL. */
   videos?: { id: string; title: string; blurb?: string }[];
+  /* PDFs shown above the first section. `file` is a path inside /public. */
+  documents?: { file: string; title: string; blurb?: string }[];
   sections: Section[];
 };
 
@@ -853,6 +855,14 @@ export const projects: Project[] = [
       "Derived the full nonlinear dynamics of a flapping-wing flyer from first principles, built the simulation in Python, and trained a PPO agent to search wing kinematics for hover.",
     cardImage: "/img/rl-frames-rear.png",
     cardImageContain: true,
+    documents: [
+      {
+        file: "/Albert_Addo_MEng_Report.pdf",
+        title: "M.Eng. Final Report",
+        blurb:
+          "The full 66-page report: frame definitions, the symbolic derivation of the equations of motion, the blade-element aerodynamic model, the hover parameter study, and every reinforcement-learning run.",
+      },
+    ],
     tech: [
       "Python",
       "SymPy",

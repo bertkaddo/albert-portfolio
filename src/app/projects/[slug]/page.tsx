@@ -120,6 +120,68 @@ export default async function ProjectPage({
           </div>
         </div>
 
+        {/* ---------- Attached documents ---------- */}
+        {project.documents && project.documents.length > 0 && (
+          <div className="px-6 mt-14">
+            <div className="max-w-6xl mx-auto">
+              <div className="rule-label mb-6">
+                <span className="section-kicker">Full report</span>
+              </div>
+              <div className="space-y-6">
+                {project.documents.map((doc) => (
+                  <div
+                    key={doc.file}
+                    className="panel rounded-lg overflow-hidden"
+                  >
+                    <div className="p-6 flex flex-col lg:flex-row lg:items-center gap-5 lg:justify-between">
+                      <div>
+                        <p className="text-lg font-display font-bold text-ink">
+                          {doc.title}
+                        </p>
+                        {doc.blurb && (
+                          <p className="text-sm text-[#4b5763] mt-1.5 max-w-2xl">
+                            {doc.blurb}
+                          </p>
+                        )}
+                      </div>
+                      <div className="flex flex-wrap gap-2.5 shrink-0">
+                        <a
+                          href={doc.file}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-secondary px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.2em]"
+                        >
+                          Open in new tab
+                        </a>
+                        <a
+                          href={doc.file}
+                          download
+                          className="btn-primary px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.2em]"
+                        >
+                          Download PDF
+                        </a>
+                      </div>
+                    </div>
+                    {/* Inline preview on desktop only — mobile browsers
+                        generally refuse to render PDFs in a frame. */}
+                    <object
+                      data={doc.file}
+                      type="application/pdf"
+                      aria-label={doc.title}
+                      className="hidden md:block w-full h-[46rem] border-t border-[#d2d9e1]"
+                    >
+                      <p className="p-6 text-sm text-[#4b5763]">
+                        Your browser cannot display this PDF inline. Use the
+                        buttons above to open or download it.
+                      </p>
+                    </object>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* ---------- Embedded video ---------- */}
         {project.videos && project.videos.length > 0 && (
           <div className="px-6 mt-14">
