@@ -11,6 +11,7 @@ import "@fontsource/ibm-plex-mono/600.css";
 
 import "./globals.css";
 import { profile } from "@/data/profile";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: `${profile.name} — Mechanical & Aerospace Engineer`,
