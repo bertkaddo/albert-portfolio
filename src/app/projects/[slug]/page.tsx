@@ -6,6 +6,7 @@ import { FaArrowLeft, FaArrowRight, FaExternalLinkAlt } from "react-icons/fa";
 import Navigation from "@/app/components/navigation";
 import Footer from "@/app/components/footer";
 import ProjectBody from "@/app/components/projectbody";
+import { MathText, mathToPlainText } from "@/app/components/math";
 import { projects, getProject, getAdjacent } from "@/data/projects";
 import { profile } from "@/data/profile";
 
@@ -23,9 +24,11 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) return { title: "Project not found" };
+  /* Summaries may carry inline LaTeX, which has no place in a meta
+     description — flatten it to readable characters first. */
   return {
     title: `${project.shortTitle} — ${profile.name}`,
-    description: project.summary,
+    description: mathToPlainText(project.summary),
   };
 }
 
@@ -64,7 +67,7 @@ export default async function ProjectPage({
               {project.title}
             </h1>
             <p className="text-xl md:text-2xl text-[#4b5763] mt-5 max-w-3xl leading-snug">
-              {project.subtitle}
+              <MathText text={project.subtitle} />
             </p>
 
             <dl className="grid sm:grid-cols-2 gap-6 mt-10 pt-8 border-t border-[#d2d9e1] max-w-4xl">
@@ -111,8 +114,12 @@ export default async function ProjectPage({
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6 mt-6">
                 {project.stats.map((stat) => (
                   <div key={stat.label} className="stat">
-                    <div className="stat-value">{stat.value}</div>
-                    <div className="stat-label">{stat.label}</div>
+                    <div className="stat-value">
+                      <MathText text={stat.value} />
+                    </div>
+                    <div className="stat-label">
+                      <MathText text={stat.label} />
+                    </div>
                   </div>
                 ))}
               </div>

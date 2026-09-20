@@ -281,18 +281,56 @@ h6 {
 }
 
 /* ---------- Equation block ---------- */
+/* Rows are KaTeX display math rendered at build time. The block keeps
+   the ruled panel of the old monospace version; KaTeX supplies the
+   typography. */
 .equation {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.86rem;
-  line-height: 2;
   background: #ffffff;
   border: 1px solid var(--color-line);
   border-left: 3px solid var(--color-navy);
   border-radius: 4px;
-  padding: 1rem 1.15rem;
-  overflow-x: auto;
+  padding: 1.15rem 1.15rem;
   color: var(--color-ink);
-  white-space: pre-wrap;
+}
+
+.equation-line {
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* Room for the scrollbar on a wide equation so it never overlaps
+     descenders in the expression above it. */
+  padding-bottom: 0.15rem;
+}
+
+.equation-line + .equation-line {
+  margin-top: 0.7rem;
+}
+
+.equation-gap {
+  height: 0.9rem;
+}
+
+/* KaTeX centres and margins display math by default; inside the panel
+   the rows are flush left and spaced by the rules above. */
+.equation .katex-display {
+  margin: 0;
+  padding: 0;
+}
+
+/* `fleqn` left-aligns display math but also indents it by 2em, which
+   the ruled panel does not need. */
+.equation .katex-display > .katex {
+  text-align: left;
+  padding-left: 0;
+}
+
+.equation .katex {
+  font-size: 1.05em;
+}
+
+/* Inline math should sit on the body baseline without stretching the
+   line box of the paragraph it sits in. */
+.katex {
+  font-size: 1.03em;
 }
 
 /* ---------- Callout ---------- */

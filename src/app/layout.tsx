@@ -9,6 +9,10 @@ import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
 import "@fontsource/ibm-plex-mono/600.css";
 
+/* KaTeX ships its own woff2 faces inside the package, so equation
+   rendering stays offline-friendly like the fonts above. */
+import "katex/dist/katex.min.css";
+
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { profile } from "@/data/profile";

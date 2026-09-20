@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Block, Section } from "@/data/projects";
+import { EquationBlock, MathText, mathToPlainText } from "./math";
 
 /* Renders one content block. Every project detail page is assembled
    from these, so adding a project never means writing JSX. */
@@ -18,7 +19,7 @@ function FigureCard({
       <div className={contain ? "bg-white p-3" : "bg-white"}>
         <Image
           src={src}
-          alt={caption}
+          alt={mathToPlainText(caption)}
           width={1400}
           height={1000}
           className={
@@ -28,7 +29,9 @@ function FigureCard({
           }
         />
       </div>
-      <figcaption className="figure-caption">{caption}</figcaption>
+      <figcaption className="figure-caption">
+        <MathText text={caption} />
+      </figcaption>
     </figure>
   );
 }
@@ -38,7 +41,7 @@ function BlockView({ block }: { block: Block }) {
     case "prose":
       return (
         <p className="text-[17px] leading-[1.75] text-[#3a4552]">
-          {block.text}
+          <MathText text={block.text} />
         </p>
       );
 
@@ -52,7 +55,7 @@ function BlockView({ block }: { block: Block }) {
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <span className="text-[17px] leading-[1.7] text-[#3a4552]">
-                  {item}
+                  <MathText text={item} />
                 </span>
               </li>
             ))}
@@ -65,7 +68,7 @@ function BlockView({ block }: { block: Block }) {
             <li key={i} className="flex gap-4">
               <span className="mt-[0.7rem] h-1.5 w-1.5 rounded-full bg-[#153D63] shrink-0" />
               <span className="text-[17px] leading-[1.7] text-[#3a4552]">
-                {item}
+                <MathText text={item} />
               </span>
             </li>
           ))}
@@ -102,7 +105,9 @@ function BlockView({ block }: { block: Block }) {
             <thead>
               <tr>
                 {block.head.map((h) => (
-                  <th key={h}>{h}</th>
+                  <th key={h}>
+                    <MathText text={h} />
+                  </th>
                 ))}
               </tr>
             </thead>
@@ -113,7 +118,9 @@ function BlockView({ block }: { block: Block }) {
                   className={block.highlight === i ? "is-highlight" : undefined}
                 >
                   {row.map((cell, j) => (
-                    <td key={j}>{cell}</td>
+                    <td key={j}>
+                      <MathText text={cell} />
+                    </td>
                   ))}
                 </tr>
               ))}
@@ -123,12 +130,14 @@ function BlockView({ block }: { block: Block }) {
       );
 
     case "equation":
-      return <div className="equation">{block.lines.join("\n")}</div>;
+      return <EquationBlock lines={block.lines} />;
 
     case "callout":
       return (
         <aside className="callout">
-          <p className="text-[17px] leading-[1.7]">{block.text}</p>
+          <p className="text-[17px] leading-[1.7]">
+            <MathText text={block.text} />
+          </p>
         </aside>
       );
 

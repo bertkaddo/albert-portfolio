@@ -5,6 +5,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Navigation from "@/app/components/navigation";
 import Footer from "@/app/components/footer";
 import Reveal from "@/app/components/reveal";
+import { MathText } from "@/app/components/math";
 import { projects } from "@/data/projects";
 import { profile } from "@/data/profile";
 
@@ -79,7 +80,7 @@ export default function ProjectsIndex() {
                         {project.shortTitle}
                       </h2>
                       <p className="text-[15px] text-[#4b5763] mt-2.5 leading-relaxed">
-                        {project.summary}
+                        <MathText text={project.summary} />
                       </p>
                     </div>
 
@@ -87,10 +88,10 @@ export default function ProjectsIndex() {
                       {project.stats.slice(0, 2).map((stat) => (
                         <div key={stat.label} className="stat">
                           <div className="stat-value text-[1.35rem]">
-                            {stat.value}
+                            <MathText text={stat.value} />
                           </div>
                           <div className="stat-label text-[0.72rem]">
-                            {stat.label}
+                            <MathText text={stat.label} />
                           </div>
                         </div>
                       ))}

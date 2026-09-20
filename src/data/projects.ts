@@ -585,9 +585,9 @@ export const projects: Project[] = [
           {
             kind: "equation",
             lines: [
-              "x(θ) = r·cos θ + √(L² − r²·sin²θ)",
-              "v(θ) = −ω·[ r·sin θ + (r²·sin θ·cos θ) ⁄ √(L² − r²·sin²θ) ]",
-              "Q(θ) = A · Σᵢ max(0, −vᵢ(θ)) ,    θᵢ = θ + 2πi ⁄ N",
+              "x(\\theta) = r\\cos\\theta + \\sqrt{L^2 - r^2\\sin^2\\theta}",
+              "v(\\theta) = -\\omega\\left[\\, r\\sin\\theta + \\frac{r^2\\sin\\theta\\cos\\theta}{\\sqrt{L^2 - r^2\\sin^2\\theta}} \\right]",
+              "Q(\\theta) = A\\sum_i \\max\\!\\left(0,\\; -v_i(\\theta)\\right), \\qquad \\theta_i = \\theta + \\frac{2\\pi i}{N}",
             ],
           },
           {
@@ -640,17 +640,14 @@ export const projects: Project[] = [
         blocks: [
           {
             kind: "prose",
-            text: "The bench motor delivers 0.75 hp at 900 rpm with 4.5 lb-ft of full-load torque. A 9:70 sprocket pair trades speed for torque into the pump crank. Checking the pair for consistency, T·ω at the crank returns 0.77 hp against 0.75 hp at the motor — the reduction conserves power to within the rounding on the torque figure, which confirms the ratio was applied in the right direction.",
+            text: "The bench motor delivers 0.75 hp at 900 rpm with 4.5 lb-ft of full-load torque. A 9:70 sprocket pair trades speed for torque into the pump crank. Checking the pair for consistency, \\(T\\omega\\) at the crank returns 0.77 hp against 0.75 hp at the motor — the reduction conserves power to within the rounding on the torque figure, which confirms the ratio was applied in the right direction.",
           },
           {
             kind: "equation",
             lines: [
-              "T_crank = T_motor · (70⁄9) = 35 lb-ft",
-              "N_crank = N_motor · (9⁄70) = 116 rpm",
+              "\\begin{aligned} T_\\text{crank} &= T_\\text{motor}\\cdot\\tfrac{70}{9} = 35\\ \\text{lb-ft} \\\\ N_\\text{crank} &= N_\\text{motor}\\cdot\\tfrac{9}{70} = 116\\ \\text{rpm} \\end{aligned}",
               "",
-              "A       = π·(d⁄2)² = 2.49 in²",
-              "V_rev   = N · A · s = 3 × 2.49 × 2 = 14.9 in³ per revolution",
-              "Q       = V_rev · N_crank = 1 727 in³⁄min = 28.3 L⁄min",
+              "\\begin{aligned} A &= \\pi\\left(\\tfrac{d}{2}\\right)^2 = 2.49\\ \\text{in}^2 \\\\ V_\\text{rev} &= N A s = 3 \\times 2.49 \\times 2 = 14.9\\ \\text{in}^3\\ \\text{per revolution} \\\\ Q &= V_\\text{rev} N_\\text{crank} = 1\\,727\\ \\text{in}^3/\\text{min} = 28.3\\ \\text{L}/\\text{min} \\end{aligned}",
             ],
           },
           {
@@ -921,7 +918,7 @@ export const projects: Project[] = [
         blocks: [
           {
             kind: "prose",
-            text: "I set up three reference frames — inertial, body, and wing — connected by direction cosine matrices, then applied Newton's second law to the coupled body-plus-wings system. Each wing carries two degrees of freedom, flapping angle φ and pitch angle ψ, pinned at the root. Because the wings carry mass and accelerate relative to the body, the body-frame acceleration terms have to be resolved back into inertial coordinates before the force balance closes.",
+            text: "I set up three reference frames — inertial, body, and wing — connected by direction cosine matrices, then applied Newton's second law to the coupled body-plus-wings system. Each wing carries two degrees of freedom, flapping angle \\(\\phi\\) and pitch angle \\(\\psi\\), pinned at the root. Because the wings carry mass and accelerate relative to the body, the body-frame acceleration terms have to be resolved back into inertial coordinates before the force balance closes.",
           },
           {
             kind: "figures",
@@ -947,8 +944,7 @@ export const projects: Project[] = [
           {
             kind: "equation",
             lines: [
-              "φ(t) = A_φ · cos(ω_φ t) + φ_c",
-              "ψ(t) = (ψ₊ − ψ₋) · sin(ω_φ t) + ψ_c ,   ψ_c = (ψ₊ + ψ₋) / 2",
+              "\\begin{aligned} \\phi(t) &= A_\\phi \\cos(\\omega_\\phi t) + \\phi_c \\\\ \\psi(t) &= (\\psi_+ - \\psi_-)\\sin(\\omega_\\phi t) + \\psi_c, \\qquad \\psi_c = \\frac{\\psi_+ + \\psi_-}{2} \\end{aligned}",
             ],
           },
           {
@@ -956,11 +952,11 @@ export const projects: Project[] = [
             src: "/img/rl-wing-angles.png",
             contain: true,
             caption:
-              "Figure 4b: Commanded wing angles over time — flapping angle φ and pitch angle ψ sharing a frequency but offset in phase.",
+              "Figure 4b: Commanded wing angles over time — flapping angle \\(\\phi\\) and pitch angle \\(\\psi\\) sharing a frequency but offset in phase.",
           },
           {
             kind: "prose",
-            text: "Splitting ψ between upstroke and downstroke — rather than holding pitch constant — is what gives the model control authority over translational motion. The sine form for ψ against the cosine form for φ places maximum pitch at the stroke reversals, where it does the most work.",
+            text: "Splitting \\(\\psi\\) between upstroke and downstroke — rather than holding pitch constant — is what gives the model control authority over translational motion. The sine form for \\(\\psi\\) against the cosine form for \\(\\phi\\) places maximum pitch at the stroke reversals, where it does the most work.",
           },
         ],
       },
@@ -975,8 +971,7 @@ export const projects: Project[] = [
           {
             kind: "equation",
             lines: [
-              "A_φ = 60°    φ_c = 30°    ω_φ = 30.04 Hz",
-              "ψ₊ = 87°     ψ₋ = 4°      ψ_c = 45.5°",
+              "\\begin{aligned} A_\\phi &= 60^\\circ & \\phi_c &= 30^\\circ & \\omega_\\phi &= 30.04\\ \\text{Hz} \\\\ \\psi_+ &= 87^\\circ & \\psi_- &= 4^\\circ & \\psi_c &= 45.5^\\circ \\end{aligned}",
             ],
           },
           {
@@ -1264,7 +1259,7 @@ export const projects: Project[] = [
           },
           {
             kind: "prose",
-            text: "The low-Reynolds polars are worse than the full-scale ones, but our glider is small and light and does not need to generate as much lift, so a lower lift coefficient is acceptable provided drag falls with it. The HQ-17 keeps a relatively high C_l/C_d for a glider this small, which is why we stayed with it.",
+            text: "The low-Reynolds polars are worse than the full-scale ones, but our glider is small and light and does not need to generate as much lift, so a lower lift coefficient is acceptable provided drag falls with it. The HQ-17 keeps a relatively high \\(C_l/C_d\\) for a glider this small, which is why we stayed with it.",
           },
           {
             kind: "figure",
@@ -1301,9 +1296,9 @@ export const projects: Project[] = [
             kind: "table",
             head: ["Parameter", "Hand calculation", "XFLR5 model"],
             rows: [
-              ["C_l at α = 0", "0.371", "0.41"],
-              ["C_d at α = 0", "0.0638", "0.11"],
-              ["C_m at α = 0", "0", "−0.0005"],
+              ["\\(C_l\\) at \\(\\alpha = 0\\)", "0.371", "0.41"],
+              ["\\(C_d\\) at \\(\\alpha = 0\\)", "0.0638", "0.11"],
+              ["\\(C_m\\) at \\(\\alpha = 0\\)", "0", "−0.0005"],
               ["Flight speed", "5 m/s", "5 m/s"],
             ],
           },
@@ -1381,7 +1376,7 @@ export const projects: Project[] = [
     status: "Completed",
     featured: true,
     summary:
-      "A MATLAB model of plasma formation inside an experimental microwave jet engine — standing-wave electron heating, energy-dependent ionization of N₂ and O₂, and the pressure rise that follows.",
+      "A MATLAB model of plasma formation inside an experimental microwave jet engine — standing-wave electron heating, energy-dependent ionization of \\(\\mathrm{N_2}\\) and \\(\\mathrm{O_2}\\), and the pressure rise that follows.",
     cardImage: "/img/plasma-te-field.jpg",
     cardImageContain: true,
     tech: [
@@ -1393,12 +1388,15 @@ export const projects: Project[] = [
     ],
     highlights: [
       "Reproduced the engine's core mechanism: centre-peaked microwave heating driving ionization of the core and the resulting pressure rise",
-      "Coupled electron and gas energy through plasma conductivity, with ionization thresholds evaluated separately for N₂ and O₂",
+      "Coupled electron and gas energy through plasma conductivity, with ionization thresholds evaluated separately for \\(\\mathrm{N_2}\\) and \\(\\mathrm{O_2}\\)",
       "Marched the full 3D field through 25 microseconds after ignition to animate the evolution of every plasma property",
     ],
     stats: [
       { value: "0.25 µs", label: "Simulated time to peak electron temperature" },
-      { value: "N₂ + O₂", label: "Species with separate impact-ionization thresholds" },
+      {
+        value: "\\(\\mathrm{N_2} + \\mathrm{O_2}\\)",
+        label: "Species with separate impact-ionization thresholds",
+      },
       { value: "3D", label: "Finite-difference spatial field, marched in time" },
     ],
     sections: [
@@ -1436,10 +1434,10 @@ export const projects: Project[] = [
             ordered: true,
             items: [
               "Initialize gas properties from the standard atmosphere and the ideal gas law.",
-              "Compute neutral collision cross sections from atomic radii, σ = π(2r)².",
+              "Compute neutral collision cross sections from atomic radii, \\(\\sigma = \\pi(2r)^2\\).",
               "Initialize microwave properties and define the electric field as a standing wave in space and time.",
               "Compute electron velocity from electron temperature.",
-              "Test electron temperature against the impact-ionization thresholds for N₂ and O₂ separately.",
+              "Test electron temperature against the impact-ionization thresholds for \\(\\mathrm{N_2}\\) and \\(\\mathrm{O_2}\\) separately.",
               "Where threshold is met, compute collision frequency and update ion and neutral densities — ions rising, neutrals falling, over the timestep.",
               "Use plasma conductivity to compute power absorbed from the microwave field, and update temperature for the next step.",
               "Record and plot the spatial variation, then repeat.",
@@ -1540,7 +1538,10 @@ export const projects: Project[] = [
     ],
     stats: [
       { value: "2.83 mm", label: "Max flapwise tip deflection, SG6043 6-inch blade at 3500 rpm" },
-      { value: "1×10⁻¹⁴", label: "Section routine agreement with the closed-form polygon integral" },
+      {
+        value: "\\(1\\times10^{-14}\\)",
+        label: "Section routine agreement with the closed-form polygon integral",
+      },
       { value: "0.931", label: "Rotor thrust coefficient — inside the actuator-disk limit of 1.0" },
       { value: "1.9%", label: "Tip deflection as a fraction of blade span" },
     ],
@@ -1570,19 +1571,16 @@ export const projects: Project[] = [
           {
             kind: "equation",
             lines: [
-              "Momentum:   dT = F·ρ·U₁²·4a(1−a)·πr·dr",
-              "            dQ = F·4a′(1−a)·ρ·U₁·π·Ω·r³·dr",
+              "\\begin{aligned} \\text{Momentum:}\\quad dT &= F\\rho U_1^2\\, 4a(1-a)\\, \\pi r\\, dr \\\\ dQ &= 4F a'(1-a)\\, \\rho U_1 \\pi \\Omega r^3\\, dr \\end{aligned}",
               "",
-              "Airfoil:    φ = atan(u/w),  α = φ − θ,  U_rel = √(u²+w²)",
-              "            dFl = F·½ρU_rel²·C_l(α)·c·dr",
-              "            dT  = B(dFl·cosφ + dFd·sinφ)",
+              "\\begin{aligned} \\text{Airfoil:}\\quad \\phi &= \\arctan(u/w), \\quad \\alpha = \\phi - \\theta, \\quad U_\\text{rel} = \\sqrt{u^2 + w^2} \\\\ dF_l &= \\tfrac{1}{2} F \\rho U_\\text{rel}^2\\, C_l(\\alpha)\\, c\\, dr \\\\ dT &= B\\left(dF_l \\cos\\phi + dF_d \\sin\\phi\\right) \\end{aligned}",
               "",
-              "Prandtl tip loss:  F = (2/π)·acos[ e^(−B(R−r)/(2r·sinφ)) ]",
+              "\\text{Prandtl tip loss:}\\quad F = \\frac{2}{\\pi}\\arccos\\!\\left[ e^{-B(R-r)/(2r\\sin\\phi)} \\right]",
             ],
           },
           {
             kind: "prose",
-            text: "Here u = U₁(1−a) is the axial velocity at the disk and w = Ωr(1+a′) the tangential, with B = 3 blades. Both closures are annulus totals across all blades, so a single cantilevered blade carries T/B.",
+            text: "Here \\(u = U_1(1-a)\\) is the axial velocity at the disk and \\(w = \\Omega r(1+a')\\) the tangential, with \\(B = 3\\) blades. Both closures are annulus totals across all blades, so a single cantilevered blade carries \\(T/B\\).",
           },
         ],
       },
@@ -1596,15 +1594,17 @@ export const projects: Project[] = [
           },
           {
             kind: "equation",
-            lines: ["J(a, a′) = (dQ_mom − dQ_air)² + [ R·(dT_mom − dT_air) ]²"],
+            lines: [
+              "J(a, a') = \\left(dQ_\\text{mom} - dQ_\\text{air}\\right)^2 + \\left[\\, R\\left(dT_\\text{mom} - dT_\\text{air}\\right) \\right]^2",
+            ],
           },
           {
             kind: "list",
             items: [
-              "The R factor on the thrust residual puts both terms in N²·m², so the cost is dimensionally homogeneous and neither residual is implicitly weighted by unit choice.",
-              "A warm start of a₀ = [a_min, 1/3] seeds the tangential factor at the Betz optimum.",
-              "Bounds a ∈ [a_min, 0.5] keep the solver out of the turbulent-wake state where momentum theory is invalid; a_min comes from streamtube continuity against the tunnel wall.",
-              "Optimality and step tolerances at 1×10⁻¹⁰, so residuals converge essentially to zero.",
+              "The \\(R\\) factor on the thrust residual puts both terms in \\(\\mathrm{N^2\\,m^2}\\), so the cost is dimensionally homogeneous and neither residual is implicitly weighted by unit choice.",
+              "A warm start of \\(a_0 = [a_\\text{min},\\, 1/3]\\) seeds the tangential factor at the Betz optimum.",
+              "Bounds \\(a \\in [a_\\text{min},\\, 0.5]\\) keep the solver out of the turbulent-wake state where momentum theory is invalid; \\(a_\\text{min}\\) comes from streamtube continuity against the tunnel wall.",
+              "Optimality and step tolerances at \\(1\\times10^{-10}\\), so residuals converge essentially to zero.",
             ],
           },
           {
@@ -1627,18 +1627,16 @@ export const projects: Project[] = [
           {
             kind: "equation",
             lines: [
-              "T = Σ dTᵢ ⁄ B ,     r̄ = Σ dTᵢ·rᵢ ⁄ Σ dTᵢ",
+              "T = \\frac{1}{B}\\sum_i dT_i, \\qquad \\bar{r} = \\frac{\\sum_i dT_i\\, r_i}{\\sum_i dT_i}",
               "",
-              "E·I(r)·v″(r) = M(r),   M(r) = T(r̄ − r)  for r < r̄",
-              "                        M(r) = 0         for r ≥ r̄",
+              "E I(r)\\, v''(r) = M(r), \\qquad M(r) = \\begin{cases} T(\\bar{r} - r) & r < \\bar{r} \\\\ 0 & r \\ge \\bar{r} \\end{cases}",
               "",
-              "v′(r) = (T ⁄ 2EI)(2r̄r − r²) + C₁",
-              "v(r)  = (T ⁄ 6EI)(3r̄r² − r³) + C₁r + C₂",
+              "\\begin{aligned} v'(r) &= \\frac{T}{2EI}\\left(2\\bar{r}r - r^2\\right) + C_1 \\\\ v(r) &= \\frac{T}{6EI}\\left(3\\bar{r}r^2 - r^3\\right) + C_1 r + C_2 \\end{aligned}",
             ],
           },
           {
             kind: "prose",
-            text: "Because I varies along the span, one pair of constants cannot serve the whole blade. The solver walks slice by slice and re-solves C₁ and C₂ at every interface to enforce C⁰ and C¹ continuity — matching both displacement and slope across each boundary. The clamped root supplies v = 0 and v′ = 0 to seed the first slice. Outboard of the load centroid the moment vanishes, v″ = 0, and the shape is exactly straight, so maximum deflection always falls at the tip.",
+            text: "Because \\(I\\) varies along the span, one pair of constants cannot serve the whole blade. The solver walks slice by slice and re-solves \\(C_1\\) and \\(C_2\\) at every interface to enforce \\(C^0\\) and \\(C^1\\) continuity — matching both displacement and slope across each boundary. The clamped root supplies \\(v = 0\\) and \\(v' = 0\\) to seed the first slice. Outboard of the load centroid the moment vanishes, \\(v'' = 0\\), and the shape is exactly straight, so maximum deflection always falls at the tip.",
           },
           {
             kind: "figure",
@@ -1659,7 +1657,7 @@ export const projects: Project[] = [
         blocks: [
           {
             kind: "prose",
-            text: "The stiffness EI needs the second moment of area of every airfoil section along the span. My first pass approximated each section as a solid ellipse of semi-axes a = c/2 and b = t/2, giving I = πab³/4. It is cheap, closed-form, and adequate where the section sits close to level.",
+            text: "The stiffness \\(EI\\) needs the second moment of area of every airfoil section along the span. My first pass approximated each section as a solid ellipse of semi-axes \\(a = c/2\\) and \\(b = t/2\\), giving \\(I = \\pi a b^3/4\\). It is cheap, closed-form, and adequate where the section sits close to level.",
           },
           {
             kind: "prose",
@@ -1672,11 +1670,11 @@ export const projects: Project[] = [
           {
             kind: "equation",
             lines: [
-              "∮ zⁿ (x dz − z dx)/2 = ((n+2)/2) · ∬ zⁿ dA",
+              "\\oint z^n\\, \\frac{x\\, dz - z\\, dx}{2} = \\frac{n+2}{2} \\iint z^n\\, dA",
               "",
-              "n = 0 → A       n = 1 → (3/2)·Q_x       n = 2 → 2·I_z₀",
+              "n = 0 \\;\\rightarrow\\; A \\qquad n = 1 \\;\\rightarrow\\; \\tfrac{3}{2} Q_x \\qquad n = 2 \\;\\rightarrow\\; 2 I_{z_0}",
               "",
-              "z_c = Q_x ⁄ A          I_xx = I_z₀ − A·z_c²",
+              "z_c = \\frac{Q_x}{A} \\qquad I_{xx} = I_{z_0} - A z_c^2",
             ],
           },
           {
@@ -1713,12 +1711,12 @@ export const projects: Project[] = [
               [
                 "Section routine",
                 "Green's-theorem result against the closed-form shoelace polygon integral, all 20 stations.",
-                "Max relative error 1.0×10⁻¹⁴ (SG6043) and 1.8×10⁻¹⁴ (SD2030) — machine precision.",
+                "Max relative error \\(1.0\\times10^{-14}\\) (SG6043) and \\(1.8\\times10^{-14}\\) (SD2030) — machine precision.",
               ],
               [
                 "Load magnitude",
                 "Rotor thrust against the actuator-disk limit: 1.3700 N over a 0.09931 m² swept area at 5 m/s.",
-                "C_T = 0.931, inside the theoretical maximum of 1.0. Confirms the closures return annulus totals.",
+                "\\(C_T = 0.931\\), inside the theoretical maximum of 1.0. Confirms the closures return annulus totals.",
               ],
               [
                 "Section model",
@@ -1729,7 +1727,7 @@ export const projects: Project[] = [
           },
           {
             kind: "prose",
-            text: "The first check matters because the boundary integral is the one place in the chain where a sign or constant slip would be invisible in the output — the deflection would simply come out plausible and wrong. Comparing against an independent closed form on the same polygon removes that risk. The second is a physical bound rather than a numerical one: no actuator disk can exceed C_T = 1, so a rotor coefficient of 0.931 confirms both that the BEM closure returns annulus totals across all three blades and that dividing by B before loading the cantilever is the right move.",
+            text: "The first check matters because the boundary integral is the one place in the chain where a sign or constant slip would be invisible in the output — the deflection would simply come out plausible and wrong. Comparing against an independent closed form on the same polygon removes that risk. The second is a physical bound rather than a numerical one: no actuator disk can exceed \\(C_T = 1\\), so a rotor coefficient of 0.931 confirms both that the BEM closure returns annulus totals across all three blades and that dividing by B before loading the cantilever is the right move.",
           },
         ],
       },
@@ -1741,7 +1739,11 @@ export const projects: Project[] = [
             kind: "table",
             head: ["Quantity", "SG6043 / 6 in", "SD2030 / 7 in"],
             rows: [
-              ["Operating point", "366.52 rad/s (λ = 13.03)", "172.24 rad/s (λ = 7.00)"],
+              [
+                "Operating point",
+                "366.52 rad/s (\\(\\lambda = 13.03\\))",
+                "172.24 rad/s (\\(\\lambda = 7.00\\))",
+              ],
               ["Rotor thrust, 3 blades", "1.3700 N", "1.5309 N"],
               ["Thrust per blade", "0.4567 N", "0.5103 N"],
               ["Load centroid r̄", "0.1207 m", "0.1322 m"],
@@ -1763,12 +1765,12 @@ export const projects: Project[] = [
               {
                 src: "/img/blade-3d-sg6043.png",
                 caption:
-                  "Figure 6: SG6043, 6-inch blade at λ = 13.03. Blade surface coloured by local flapwise deflection; the side view overlays the undeflected blade in grey.",
+                  "Figure 6: SG6043, 6-inch blade at \\(\\lambda = 13.03\\). Blade surface coloured by local flapwise deflection; the side view overlays the undeflected blade in grey.",
                 contain: true,
               },
               {
                 src: "/img/blade-3d-sd2030.png",
-                caption: "Figure 7: SD2030, 7-inch blade at λ = 7.",
+                caption: "Figure 7: SD2030, 7-inch blade at \\(\\lambda = 7\\).",
                 contain: true,
               },
             ],
@@ -1866,7 +1868,7 @@ export const projects: Project[] = [
           },
           {
             kind: "prose",
-            text: "The structural response follows from the principle of minimum total potential energy, π = U − W. For a shell, strain energy integrates membrane strains, bending curvatures, and transverse shear strains over the mid-surface, with membrane, bending, and shear stiffness matrices assembled from Young's modulus, Poisson's ratio, and thickness. Bending stiffness scales with t³ while membrane stiffness scales linearly with t — which is precisely why thickness is such a powerful design variable, and why the response surfaces later come out so strongly nonlinear.",
+            text: "The structural response follows from the principle of minimum total potential energy, \\(\\pi = U - W\\). For a shell, strain energy integrates membrane strains, bending curvatures, and transverse shear strains over the mid-surface, with membrane, bending, and shear stiffness matrices assembled from Young's modulus, Poisson's ratio, and thickness. Bending stiffness scales with \\(t^3\\) while membrane stiffness scales linearly with \\(t\\) — which is precisely why thickness is such a powerful design variable, and why the response surfaces later come out so strongly nonlinear.",
           },
           {
             kind: "callout",
@@ -2059,7 +2061,7 @@ export const projects: Project[] = [
     status: "Completed",
     featured: false,
     summary:
-      "A redesign of the Apollo Service Propulsion System's feed architecture, showing that a turbopump meets the same 2,800 m/s mission Δv with roughly 25% less propellant.",
+      "A redesign of the Apollo Service Propulsion System's feed architecture, showing that a turbopump meets the same 2,800 m/s mission \\(\\Delta v\\) with roughly 25% less propellant.",
     cardImage: "/img/apollo-cad-side.jpg",
     cardImageContain: true,
     tech: [
@@ -2078,7 +2080,10 @@ export const projects: Project[] = [
       { value: "−24.6%", label: "Required propellant mass at 5 MPa chamber pressure" },
       { value: "5.5 MPa", label: "Design chamber pressure, up from 0.69 MPa" },
       { value: "+6.1%", label: "Specific impulse gain — real, but not the main effect" },
-      { value: "ε ≈ 62", label: "Nozzle area ratio for ideal expansion" },
+      {
+        value: "\\(\\varepsilon \\approx 62\\)",
+        label: "Nozzle area ratio for ideal expansion",
+      },
     ],
     sections: [
       {
@@ -2087,7 +2092,7 @@ export const projects: Project[] = [
         blocks: [
           {
             kind: "prose",
-            text: "The Apollo Command and Service Module's Service Propulsion System used the Aerojet AJ10 — a bipropellant engine burning N₂O₄ and Aerozine-50, rated at 20,500 lbf, responsible for lunar orbit insertion and departure. It was designed to be extremely reliable, and it achieved that reliability partly through a helium pressure-fed architecture.",
+            text: "The Apollo Command and Service Module's Service Propulsion System used the Aerojet AJ10 — a bipropellant engine burning \\(\\mathrm{N_2O_4}\\) and Aerozine-50, rated at 20,500 lbf, responsible for lunar orbit insertion and departure. It was designed to be extremely reliable, and it achieved that reliability partly through a helium pressure-fed architecture.",
           },
           {
             kind: "prose",
@@ -2096,10 +2101,9 @@ export const projects: Project[] = [
           {
             kind: "equation",
             lines: [
-              "P_tank ≳ P_c + ΔP_inj + ΔP_lines",
+              "P_\\text{tank} \\gtrsim P_c + \\Delta P_\\text{inj} + \\Delta P_\\text{lines}",
               "",
-              "t ≈ P_tank·r / (2σ_allow)",
-              "m_tank ∝ P_tank·r³ / σ_allow",
+              "\\begin{aligned} t &\\approx \\frac{P_\\text{tank}\\, r}{2\\sigma_\\text{allow}} \\\\[2pt] m_\\text{tank} &\\propto \\frac{P_\\text{tank}\\, r^3}{\\sigma_\\text{allow}} \\end{aligned}",
             ],
           },
           {
@@ -2119,9 +2123,7 @@ export const projects: Project[] = [
           {
             kind: "equation",
             lines: [
-              "P_out ≈ P_c + ΔP_inj + ΔP_lines",
-              "ΔP_pump ≈ P_out − P_tank",
-              "H = ΔP_pump / (ρ·g₀)",
+              "\\begin{aligned} P_\\text{out} &\\approx P_c + \\Delta P_\\text{inj} + \\Delta P_\\text{lines} \\\\ \\Delta P_\\text{pump} &\\approx P_\\text{out} - P_\\text{tank} \\\\[2pt] H &= \\frac{\\Delta P_\\text{pump}}{\\rho g_0} \\end{aligned}",
             ],
           },
           {
@@ -2136,18 +2138,25 @@ export const projects: Project[] = [
         blocks: [
           {
             kind: "prose",
-            text: "For a fixed mission Δv, required propellant mass depends on both specific impulse and dry mass. Working through the rocket equation across candidate chamber pressures separates those two contributions.",
+            text: "For a fixed mission \\(\\Delta v\\), required propellant mass depends on both specific impulse and dry mass. Working through the rocket equation across candidate chamber pressures separates those two contributions.",
           },
           {
             kind: "equation",
             lines: [
-              "Δv = g₀·I_sp·ln(m₀ / m_f)",
-              "m_p = m_f · [ exp(Δv / (g₀·I_sp)) − 1 ]",
+              "\\begin{aligned} \\Delta v &= g_0 I_\\text{sp} \\ln\\!\\left(\\frac{m_0}{m_f}\\right) \\\\[2pt] m_p &= m_f\\left[ \\exp\\!\\left(\\frac{\\Delta v}{g_0 I_\\text{sp}}\\right) - 1 \\right] \\end{aligned}",
             ],
           },
           {
             kind: "table",
-            head: ["Design", "P_c", "I_sp (s)", "%Δu_e", "m_f (kg)", "m_p (kg)", "%Δm_p"],
+            head: [
+              "Design",
+              "\\(P_c\\)",
+              "\\(I_\\text{sp}\\) (s)",
+              "%\\(\\Delta u_e\\)",
+              "\\(m_f\\) (kg)",
+              "\\(m_p\\) (kg)",
+              "%\\(\\Delta m_p\\)",
+            ],
             highlight: 3,
             rows: [
               ["Baseline (pressure-fed)", "0.69 MPa", "314", "0.0%", "6,100", "9,044", "0.0%"],
@@ -2227,7 +2236,10 @@ export const projects: Project[] = [
     ],
     stats: [
       { value: "NACA 0012", label: "Test geometry, swept from −5° to +10° angle of attack" },
-      { value: "Γ → C_L", label: "Lift recovered via the Kutta–Joukowski theorem" },
+      {
+        value: "\\(\\Gamma \\rightarrow C_L\\)",
+        label: "Lift recovered via the Kutta–Joukowski theorem",
+      },
       { value: "O(N²)", label: "Dense influence matrix, direct-solved rather than iterated" },
     ],
     sections: [
@@ -2242,12 +2254,9 @@ export const projects: Project[] = [
           {
             kind: "equation",
             lines: [
-              "∇ · u = 0        (incompressible)",
-              "∇ × u = 0        (irrotational)  ⟹  u = ∇φ",
-              "∇²φ = 0          (Laplace)",
+              "\\begin{aligned} \\nabla\\cdot\\mathbf{u} &= 0 & &\\text{(incompressible)} \\\\ \\nabla\\times\\mathbf{u} &= 0 & &\\text{(irrotational)} \\;\\implies\\; \\mathbf{u} = \\nabla\\phi \\\\ \\nabla^2\\phi &= 0 & &\\text{(Laplace)} \\end{aligned}",
               "",
-              "u · n̂ = 0        on the airfoil surface",
-              "L′ = ρU∞Γ        (Kutta–Joukowski)",
+              "\\begin{aligned} \\mathbf{u}\\cdot\\hat{\\mathbf{n}} &= 0 & &\\text{on the airfoil surface} \\\\ L' &= \\rho U_\\infty \\Gamma & &\\text{(Kutta--Joukowski)} \\end{aligned}",
             ],
           },
           {
@@ -2270,7 +2279,7 @@ export const projects: Project[] = [
           },
           {
             kind: "equation",
-            lines: ["A·γ = b"],
+            lines: ["\\mathbf{A}\\,\\boldsymbol{\\gamma} = \\mathbf{b}"],
           },
           {
             kind: "prose",
@@ -2319,14 +2328,18 @@ export const projects: Project[] = [
               {
                 src: "/img/vortex-pressure-contour.jpg",
                 caption:
-                  "Figure 3: Pressure contour. C_p is conventionally plotted negated, so this is consistent with lift generation at positive angle of attack.",
+                  "Figure 3: Pressure contour. \\(C_p\\) is conventionally plotted negated, so this is consistent with lift generation at positive angle of attack.",
                 contain: true,
               },
             ],
           },
           {
             kind: "table",
-            head: ["Angle of attack", "Circulation Γ", "C_L (computed)"],
+            head: [
+              "Angle of attack",
+              "Circulation \\(\\Gamma\\)",
+              "\\(C_L\\) (computed)",
+            ],
             rows: [
               ["−5.00°", "−86.93", "−34.77"],
               ["−2.00°", "−34.81", "−13.92"],
@@ -2339,7 +2352,7 @@ export const projects: Project[] = [
           },
           {
             kind: "prose",
-            text: "Those C_L values are unphysically large, and the flow field showed non-physical recirculation downstream of the airfoil. Both point to the same cause: the circulation being solved for is not consistent with a clean Kutta-enforced trailing-edge flow.",
+            text: "Those \\(C_L\\) values are unphysically large, and the flow field showed non-physical recirculation downstream of the airfoil. Both point to the same cause: the circulation being solved for is not consistent with a clean Kutta-enforced trailing-edge flow.",
           },
           {
             kind: "prose",

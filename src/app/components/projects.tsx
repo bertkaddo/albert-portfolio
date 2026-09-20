@@ -1,9 +1,13 @@
-"use client";
+/* Server component: it holds no state or handlers of its own, so the
+   math in the stat strip is rendered to HTML at build time and KaTeX
+   never reaches the client bundle. `Reveal` stays a client component
+   and receives this markup as children. */
 
 import Image from "next/image";
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
 import Reveal from "./reveal";
+import { MathText } from "./math";
 import { projects } from "@/data/projects";
 
 export default function Projects() {
@@ -62,7 +66,7 @@ export default function Projects() {
                         {project.shortTitle}
                       </h3>
                       <p className="text-[#4b5763] leading-relaxed">
-                        {project.summary}
+                        <MathText text={project.summary} />
                       </p>
                     </div>
 
@@ -70,8 +74,12 @@ export default function Projects() {
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                       {project.stats.slice(0, 4).map((stat) => (
                         <div key={stat.label} className="stat">
-                          <div className="stat-value">{stat.value}</div>
-                          <div className="stat-label">{stat.label}</div>
+                          <div className="stat-value">
+                            <MathText text={stat.value} />
+                          </div>
+                          <div className="stat-label">
+                            <MathText text={stat.label} />
+                          </div>
                         </div>
                       ))}
                     </div>
